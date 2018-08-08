@@ -1,0 +1,29 @@
+version: '3'
+services:
+  prisma:
+    depends_on: 
+      - db
+    image: prismagraphql/prisma:1.13
+    restart: always
+    ports:
+    - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        managementApiSecret: mysecret123
+        port: 4466
+        databases:
+          default:
+            connector: postgres  # or `postgres`
+            active: true
+            host: db
+            port: 5432        # or `5432` for `postgres`
+            user: postgres
+            password: postgres
+  db:  # or `postgres`
+    image: sly613/dev-psql
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
