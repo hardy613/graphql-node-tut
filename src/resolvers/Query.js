@@ -1,16 +1,16 @@
-async function feed(parent, args, context, info) {
-  const where = args.filter
-    ? {
-        OR: [
-          { url_contains: args.filter },
-          { description_contains: args.filter },
-        ],
-      }
-    : {}
+async function feed(parent, args, context) {
+	const where = args.filter
+		? {
+			OR: [
+				{ url_contains: args.filter },
+				{ description_contains: args.filter },
+			],
+		}
+		: {}
 
 	const queriedLinks = await context.db.query.links(
 		{ where, skip: args.skip, first: args.first, orderBy: args.orderBy },
-		`{ id }`,
+		'{ id }',
 	)
 
 	const countSelectionSet = `
@@ -29,5 +29,5 @@ async function feed(parent, args, context, info) {
 }
 
 module.exports = {
-  feed,
+	feed,
 }
