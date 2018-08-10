@@ -1,8 +1,8 @@
 const { resolve } = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: resolve(__dirname, 'src/index.html'),
-  filename: resolve(__dirname, 'dist/index.html'),
+	template: resolve(__dirname, 'src/index.html'),
+	filename: resolve(__dirname, 'dist/index.html'),
 })
 
 module.exports = {
