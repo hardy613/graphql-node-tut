@@ -5,6 +5,7 @@ const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
 const Subscription = require('./resolvers/Subscription')
 const Feed = require('./resolvers/Feed')
+const { resolve } = require('path')
 
 const resolvers = {
 	Query,
@@ -15,12 +16,12 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-	typeDefs: './src/schema.graphql',
+	typeDefs: resolve('./src/schema.graphql'),
 	resolvers,
 	context: req => ({
 		...req,
 		db: new Prisma({
-			typeDefs: 'src/generated/prisma.graphql',
+			typeDefs: resolve('./src/generated/prisma.graphql'),
 			endpoint: 'http://localhost:4466',
 			secret: 'mysecret123',
 			debug: true,

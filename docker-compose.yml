@@ -6,20 +6,20 @@ services:
     image: prismagraphql/prisma:1.13
     restart: always
     ports:
-    - "4466:4466"
+    - 4466:4466
     environment:
       PRISMA_CONFIG: |
         managementApiSecret: mysecret123
         port: 4466
         databases:
           default:
-            connector: postgres  # or `postgres`
+            connector: postgres
             active: true
             host: db
-            port: 5432        # or `5432` for `postgres`
+            port: 5432
             user: postgres
             password: postgres
-  db:  # or `postgres`
+  db:
     image: sly613/dev-psql
     ports:
       - 5432:5432
