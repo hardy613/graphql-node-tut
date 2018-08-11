@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --content-base dist --inline --hot --mode development",
+    "start": "webpack-dev-server --content-base src --inline --hot --mode development --no-babelrc",
     "build": "webpack --mode production"
   },
   "author": "Scott Hardy",
   "license": "ISC",
   "dependencies": {
     "apollo-boost": "^0.1.13",
+    "apollo-link-context": "^1.0.8",
     "bcryptjs": "^2.4.3",
     "graphql": "^0.13.2",
     "graphql-cli": "^2.16.5",
