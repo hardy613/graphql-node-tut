@@ -5,15 +5,16 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { cookie } from './utils'
+import cookies from 'doc-cookies'
 import { setContext } from 'apollo-link-context'
 import { AUTH_TOKEN } from './constants'
+
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000',
 })
 
 const authLink = setContext((_, { headers }) => {
-	const token = cookie.getItem(AUTH_TOKEN)
+	const token = cookies.getItem(AUTH_TOKEN)
 	return {
 		headers: {
 			...headers,

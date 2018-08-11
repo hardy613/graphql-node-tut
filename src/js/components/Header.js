@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { cookie } from '../utils'
+import cookies from 'doc-cookies'
 
 class Header extends Component {
 	
 	static get authToken() {
-		return cookie.getItem(AUTH_TOKEN)
+		return cookies.getItem(AUTH_TOKEN)
 	}
 	get authToken() {
 		return this.constructor.authToken

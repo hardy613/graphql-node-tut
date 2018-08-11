@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
-import { cookie } from '../utils'
+import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -87,7 +87,7 @@ class Login extends Component {
   }
 
   _saveUserData = token => {
-    cookie.setItem(AUTH_TOKEN, token)
+    cookies.setItem(AUTH_TOKEN, token)
   }
 }
 
