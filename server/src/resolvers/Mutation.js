@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
-
+const { getUserId, isUrl, hashUrl } = require('../utils')
+const { MAX_SHORT_URL_LENGTH, APP_SECRET } = require('../constants')
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
 	const user = await context.db.mutation.createUser({
@@ -16,13 +16,13 @@ async function signup(parent, args, context) {
 	}
 }
 
-async function login(parent, args, context) {
-	const user = await context.db.query.user({ where: { email: args.email } }, ' { id password } ')
+async function login(parent, {email, password}, context) {
+	const user = await context.db.query.user({ where: { email } }, ' { id password } ')
 	if (!user) {
 		throw new Error('No such user found')
 	}
 
-	const valid = await bcrypt.compare(args.password, user.password)
+	const valid = await bcrypt.compare(password, user.password)
 	if (!valid) {
 		throw new Error('Invalid password')
 	}
@@ -35,13 +35,21 @@ async function login(parent, args, context) {
 	}
 }
 
-function post(parent, args, context, info) {
+async function post(parent, {url = '', description = '', views = 1}, context, info) {
+	url = url.trim()
+	description = description.trim()
+	if(!isUrl(url)) {
+		throw new Error('Invaild url')
+	}
 	const userId = getUserId(context)
-	return context.db.mutation.createLink(
+	const slug = hashUrl(url, MAX_SHORT_URL_LENGTH)
+	return context.db.mutation.createPost(
 		{
 			data: {
-				url: args.url,
-				description: args.description,
+				url,
+				description,
+				slug,
+				views,
 				postedBy: { connect: { id: userId } },
 			},
 		},
@@ -49,25 +57,41 @@ function post(parent, args, context, info) {
 	)
 }
 
-async function vote(parent, args, context, info) {
+async function vote(parent, {postId}, context, info) {
 	const userId = getUserId(context)
-	const linkExists = await context.db.exists.Vote({
+	const postExists = await context.db.exists.Vote({
 		user: { id: userId },
-		link: { id: args.linkId },
+		post: { id: postId },
 	})
-	if (linkExists) {
-		throw new Error(`Already voted for link: ${args.linkId}`)
+	if (postExists) {
+		throw new Error(`Already voted for post: ${postId}`)
 	}
 
 	return context.db.mutation.createVote(
 		{
 			data: {
 				user: { connect: { id: userId } },
-				link: { connect: { id: args.linkId } },
+				post: { connect: { id: postId } },
 			},
 		},
 		info,
 	)
+}
+
+async function viewPost(parent, {id, views}, context) {
+	if (!id) {
+		throw new Error('An id is required')
+	}
+	const postExists = await context.db.exists.Post({
+		id
+	})
+	if (!postExists) {
+		throw new Error(`Could not find post for ${id}`)
+	}
+	return context.db.mutation.updatePost({
+		where: { id, },
+		data: { views },
+	})
 }
 
 module.exports = {
@@ -75,4 +99,5 @@ module.exports = {
 	login,
 	post,
 	vote,
+	viewPost,
 }

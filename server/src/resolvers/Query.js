@@ -8,7 +8,7 @@ async function feed(parent, args, context) {
 		}
 		: {}
 
-	const queriedLinks = await context.db.query.links(
+	const queriedPosts = await context.db.query.posts(
 		{ where, skip: args.skip, first: args.first, orderBy: args.orderBy },
 		'{ id }',
 	)
@@ -20,14 +20,29 @@ async function feed(parent, args, context) {
 			}
 		}
 	`
-	const linksConnection = await context.db.query.linksConnection({}, countSelectionSet)
+	const postsConnection = await context.db.query.postsConnection({}, countSelectionSet)
 
 	return {
-		count: linksConnection.aggregate.count,
-		linkIds: queriedLinks.map(link => link.id),
+		count: postsConnection.aggregate.count,
+		postIds: queriedPosts.map(post => post.id),
 	}
 }
 
+async function getPostBySlug(parent, {slug}, context, info) {
+	const posts = await context.db.query.posts(
+		{ where: { slug }, first: 1, },
+		info,
+	)
+
+	if(!posts.length) {
+		throw new Error(`Could not find post with slug: ${slug}`)
+	}
+	return posts[0]
+}
+
+
+
 module.exports = {
 	feed,
+	getPostBySlug,
 }

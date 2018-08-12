@@ -16,12 +16,13 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-	typeDefs: resolve('./src/schema.graphql'),
+	typeDefs: resolve(__dirname, 'schema.graphql'),
+	resolverValidationOptions: { requireResolversForResolveType: false }, 
 	resolvers,
 	context: req => ({
 		...req,
 		db: new Prisma({
-			typeDefs: resolve('./src/generated/prisma.graphql'),
+			typeDefs: resolve(__dirname, 'generated/prisma.graphql'),
 			endpoint: 'http://localhost:4466',
 			secret: 'mysecret123',
 			debug: true,

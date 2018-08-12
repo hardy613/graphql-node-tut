@@ -1,12 +1,12 @@
-function newLinkSubscribe (parent, args, context, info) {
-	return context.db.subscription.link(
+function newPostSubscribe (parent, args, context, info) {
+	return context.db.subscription.post(
 		{ where: { mutation_in: ['CREATED'] } },
 		info,
 	)
 }
 
-const newLink = {
-	subscribe: newLinkSubscribe
+const newPost = {
+	subscribe: newPostSubscribe
 }
 
 
@@ -22,6 +22,6 @@ const newVote = {
 }
 
 module.exports = {
-	newLink,
+	newPost,
 	newVote,
 }

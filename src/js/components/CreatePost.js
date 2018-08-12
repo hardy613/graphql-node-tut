@@ -9,11 +9,12 @@ const POST_MUTATION = gql`
 			createdAt
 			url
 			description
+			slug
 		}
 	}
 `
 
-class CreateLink extends Component {
+class CreatePost extends Component {
 
 	state = {
 		description: '',
@@ -50,4 +51,4 @@ class CreateLink extends Component {
 	}
 }
 
-export default CreateLink
+export default CreatePost

@@ -26,16 +26,16 @@ class Header extends Component {
 					</Link>
 				</div>
 				<div>
-        {this.authToken ? (
-         <Link to='/logout'> 
+					{this.authToken ? (
+						<Link to='/logout'> 
             logout
-          </Link>
-        ) : (
-          <Link to='/login'>
+						</Link>
+					) : (
+						<Link to='/login'>
             login
-          </Link>
-        )}
-      </div>
+						</Link>
+					)}
+				</div>
 			</div>
 		)
 	}

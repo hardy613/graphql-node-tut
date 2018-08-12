@@ -1,10 +1,12 @@
-type Link {
+type Post {
   id: ID! @unique
   createdAt: DateTime!
   description: String!
   url: String!
+  slug: String! @unique
   postedBy: User
   votes: [Vote!]!
+  views: Int
 }
 
 type User {
@@ -12,12 +14,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  links: [Link!]!
+  posts: [Post!]!
   votes: [Vote!]!
 }
 
 type Vote {
   id: ID! @unique
-  link: Link!
+  post: Post!
   user: User!
 }
