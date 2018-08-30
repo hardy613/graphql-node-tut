@@ -4,7 +4,15 @@ import moment from 'moment'
 
 class Post extends Component {
 	render() {
-		const {description, url, slug, votes, createdAt, postedBy} = this.props.post
+		const {
+			description,
+			url,
+			slug,
+			votes,
+			createdAt,
+			postedBy
+		} = this.props.post
+
 		return (
 			<div>
 				<p>{this.props.index}</p>

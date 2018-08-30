@@ -31,14 +31,19 @@ class PostList extends Component {
 		return (
 			<Query query={FEED_QUERY}>
 				{({ loading, error, data }) => {
-					if (loading) return <div>Fetching</div>
-					if (error) return <div>Error</div>
+					if (loading) {
+						return <div>Fetching</div>
+					}
 
-					const posts = data.feed.posts
+					if (error) {
+						return <div>Error</div>
+					}
+
+					const { posts } = data.feed
 
 					return (
 						<div>
-							{posts.map((post, index) => <Post key={post.id} post={post} index={index} />)}
+							{posts.map((post, index ) => <Post key={post.id} post={post} index={index} />)}
 						</div>
 					)
 				}}

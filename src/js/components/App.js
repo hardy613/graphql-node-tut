@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PostList from './PostList'
 import CreatePost from './CreatePost'
 import Header from './Header'
+import Sidebar from './Sidebar'
 import Login from './Login'
 import Logout from './Logout'
 import Outbound from './Outbound'
@@ -13,6 +14,7 @@ class App extends Component {
 			<BrowserRouter>
 				<div>
 					<Header />
+					<Sidebar />
 					<div>
 						<Switch>
 							<Route exact path='/' component={PostList} />

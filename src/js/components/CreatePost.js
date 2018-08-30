@@ -25,27 +25,33 @@ class CreatePost extends Component {
 		const { description, url } = this.state
 		return (
 			<div>
-				<div>
-				<input
-					value={description}
-					onChange={e => this.setState({ description: e.target.value })}
-					type='text'
-					placeholder='A description for the link'
-					/>
-				<input
-					value={url}
-					onChange={e => this.setState({ url: e.target.value })}
-					type='text'
-					placeholder='The URL for the link'
-					/>
+				<div className='form-group'>
+					<label className='form-label'>Title</label>
+					<input
+						value={description}
+						onChange={e => this.setState({ description: e.target.value })}
+						type='text'
+						placeholder='Your title for the link'
+						/>
 				</div>
-				<Mutation
-					mutation={POST_MUTATION}
-					variables={{ description, url }}
-					onCompleted={() => this.props.history.push('/')}
-					>
-					{postMutation => <button onClick={postMutation}>Submit</button>}
-				</Mutation>
+				<div className='form-group'>
+					<label className='form-label'>Uniform Resource Locator</label>
+					<input
+						value={url}
+						onChange={e => this.setState({ url: e.target.value })}
+						type='text'
+						placeholder='https://example.com'
+						/>
+				</div>
+				<div className='form-group'>
+					<Mutation
+						mutation={POST_MUTATION}
+						variables={{ description, url }}
+						onCompleted={() => this.props.history.push('/')}
+						>
+						{postMutation => <button className='btn btn-primary' onClick={postMutation}>Submit</button>}
+					</Mutation>
+				</div>
 			</div>
 		)
 	}

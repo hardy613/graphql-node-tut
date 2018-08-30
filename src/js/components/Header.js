@@ -15,28 +15,29 @@ class Header extends Component {
 
 	render() {
 		return (
-			<div>
-				<div>
-					<div>Link me bo</div>
-					<Link to='/'>
-            feed
+			<header className='navbar'> 
+			<section className='navbar-section'>
+				<a className='btn btn-link btn-action'>
+					<i className='icon icon-menu'></i>
+				</a>
+
+				<Link to='/' className='btn btn-link'>
+           feed
+				</Link>
+				<Link to='/create' className='btn btn-link'>
+           submit
+				</Link>
+				{this.authToken ? (
+					<Link to='/logout' className='btn btn-link'>
+           logout
 					</Link>
-					<Link to='/create'>
-            submit
+				) : (
+					<Link to='/login' className='btn btn-link'>
+           login
 					</Link>
-				</div>
-				<div>
-					{this.authToken ? (
-						<Link to='/logout'> 
-            logout
-						</Link>
-					) : (
-						<Link to='/login'>
-            login
-						</Link>
-					)}
-				</div>
-			</div>
+				)}
+			</section>
+			</header>
 		)
 	}
 }
