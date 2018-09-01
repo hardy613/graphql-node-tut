@@ -8,6 +8,7 @@ services:
     ports:
     - 4466:4466
     environment:
+      NODE_ENV: development
       PRISMA_CONFIG: |
         managementApiSecret: mysecret123
         port: 4466
@@ -25,5 +26,6 @@ services:
       - 5432:5432
     restart: always
     environment:
+      NODE_ENV: development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

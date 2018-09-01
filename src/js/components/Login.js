@@ -3,22 +3,7 @@ import { AUTH_TOKEN } from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-
-const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name) {
-      token
-    }
-  }
-`
-
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
-`
+import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../actions/mutation'
 
 class Login extends Component {
   state = {
@@ -31,7 +16,7 @@ class Login extends Component {
   render() {
     const { login, email, password, name } = this.state
     return (
-      <div>
+      <div className='container'>
       <p>{login ? 'Login' : 'Sign Up'}</p>
           {!login && (
         	<div className='form-group'>

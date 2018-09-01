@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { APP_SECRET } = require('./constants')
+
 function getUserId(context) {
 	const Authorization = context.request.get('Authorization')
 	if (Authorization) {
@@ -17,18 +18,23 @@ function isUrl(url = '') {
 	return url.match(regex)
 }
 
-function hashUrl(url = '', max = 5) {
-	let hash, i = 0
+function hash(url = '', max) {
+	let hash = 0
+	let i = 0
 	if(!url.length) return hash
 	while(i < url.length) {
 		hash = ((hash << 5) - hash + url.charCodeAt(i++) << 0)
 	}
-	return hash.toString(16).substring(0, max)
+	hash = hash.toString(16)
+	if(!max || typeof max !== 'number') {
+		max = hash.length
+	}
+	return hash.substring(0, max)
 }
 
 module.exports = {
 	APP_SECRET,
 	getUserId,
 	isUrl,
-	hashUrl,
+	hash,
 }

@@ -3,6 +3,7 @@ async function feed(parent, args, context) {
 		? {
 			OR: [
 				{ url_contains: args.filter },
+				{ title_contains: args.filter },
 				{ description_contains: args.filter },
 			],
 		}
@@ -20,7 +21,8 @@ async function feed(parent, args, context) {
 			}
 		}
 	`
-	const postsConnection = await context.db.query.postsConnection({}, countSelectionSet)
+	const postsConnection = await context.db
+		.query.postsConnection({}, countSelectionSet)
 
 	return {
 		count: postsConnection.aggregate.count,

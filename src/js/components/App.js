@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PostList from './PostList'
 import CreatePost from './CreatePost'
+import Search from './Search'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import Login from './Login'
@@ -19,6 +20,7 @@ class App extends Component {
 						<Switch>
 							<Route exact path='/' component={PostList} />
 							<Route path='/create' component={CreatePost} />
+							<Route path='/search' component={Search} />
 							<Route path='/login' component={Login} />
 							<Route path='/logout' component={Logout} />
 							<Route path='/-/:slug' component={Outbound} />

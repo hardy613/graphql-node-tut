@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sun Aug 12 2018 17:24:57 GMT+0000 (Coordinated Universal Time)
+# timestamp: Fri Aug 31 2018 22:45:37 GMT+0000 (Coordinated Universal Time)
 
 type AggregatePost {
   count: Int!
@@ -77,6 +77,8 @@ type PageInfo {
 type Post implements Node {
   id: ID!
   createdAt: DateTime!
+  image: String
+  title: String!
   description: String!
   url: String!
   slug: String!
@@ -96,6 +98,8 @@ type PostConnection {
 }
 
 input PostCreateInput {
+  image: String
+  title: String!
   description: String!
   url: String!
   slug: String!
@@ -115,6 +119,8 @@ input PostCreateOneWithoutVotesInput {
 }
 
 input PostCreateWithoutPostedByInput {
+  image: String
+  title: String!
   description: String!
   url: String!
   slug: String!
@@ -123,6 +129,8 @@ input PostCreateWithoutPostedByInput {
 }
 
 input PostCreateWithoutVotesInput {
+  image: String
+  title: String!
   description: String!
   url: String!
   slug: String!
@@ -144,6 +152,10 @@ enum PostOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  image_ASC
+  image_DESC
+  title_ASC
+  title_DESC
   description_ASC
   description_DESC
   url_ASC
@@ -159,6 +171,8 @@ enum PostOrderByInput {
 type PostPreviousValues {
   id: ID!
   createdAt: DateTime!
+  image: String
+  title: String!
   description: String!
   url: String!
   slug: String!
@@ -205,6 +219,8 @@ input PostSubscriptionWhereInput {
 }
 
 input PostUpdateInput {
+  image: String
+  title: String
   description: String
   url: String
   slug: String
@@ -231,6 +247,8 @@ input PostUpdateOneWithoutVotesInput {
 }
 
 input PostUpdateWithoutPostedByDataInput {
+  image: String
+  title: String
   description: String
   url: String
   slug: String
@@ -239,6 +257,8 @@ input PostUpdateWithoutPostedByDataInput {
 }
 
 input PostUpdateWithoutVotesDataInput {
+  image: String
+  title: String
   description: String
   url: String
   slug: String
@@ -333,6 +353,86 @@ input PostWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""

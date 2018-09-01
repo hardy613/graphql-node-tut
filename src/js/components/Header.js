@@ -27,12 +27,17 @@ class Header extends Component {
 				<Link to='/create' className='btn btn-link'>
            submit
 				</Link>
+				<Link to='/search' className='btn btn-link'>
+           search
+				</Link>
+			</section>
+			<section className='navbar-section'>
 				{this.authToken ? (
-					<Link to='/logout' className='btn btn-link'>
+					<Link to='/logout' className='btn btn-primary'>
            logout
 					</Link>
 				) : (
-					<Link to='/login' className='btn btn-link'>
+					<Link to='/login' className='btn btn-primary'>
            login
 					</Link>
 				)}

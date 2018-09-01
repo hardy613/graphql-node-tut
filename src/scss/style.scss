@@ -1,6 +1,8 @@
-@import '../../node_modules/normalize.css/normalize';
+@import './vendors/normalize';
+
 @import '../../node_modules/spectre.css/src/spectre';
 @import '../../node_modules/spectre.css/src/spectre-exp';
 @import '../../node_modules/spectre.css/src/spectre-icons';
 
-@import './components/sidebar'
+@import './components/header';
+@import './components/sidebar';

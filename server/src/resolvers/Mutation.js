@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { getUserId, isUrl, hashUrl } = require('../utils')
+const { getUserId, isUrl, hash } = require('../utils')
 const { MAX_SHORT_URL_LENGTH, APP_SECRET } = require('../constants')
+
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
 	const user = await context.db.mutation.createUser({
@@ -35,18 +36,26 @@ async function login(parent, {email, password}, context) {
 	}
 }
 
-async function post(parent, {url = '', description = '', views = 1}, context, info) {
+async function post(parent, args, context, info) {
+	let {
+		url = '',
+		description = '',
+		title = '',
+		views = 1,
+	} = args
 	url = url.trim()
 	description = description.trim()
+	title = title.trim();
 	if(!isUrl(url)) {
 		throw new Error('Invaild url')
 	}
 	const userId = getUserId(context)
-	const slug = hashUrl(url, MAX_SHORT_URL_LENGTH)
+	const slug = hash(url, MAX_SHORT_URL_LENGTH)
 	return context.db.mutation.createPost(
 		{
 			data: {
 				url,
+				title,
 				description,
 				slug,
 				views,
