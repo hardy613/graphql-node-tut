@@ -2,7 +2,7 @@
 
 type Query {
   post(id: ID!): Post!
-	feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
+  feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
   getPostBySlug(slug: String!): Post!
 }
 
