@@ -4,7 +4,6 @@ import moment from 'moment'
 import { AUTH_TOKEN } from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import { VOTE_MUTATION } from '../actions/mutation'
 
 class Post extends Component {

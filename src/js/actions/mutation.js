@@ -1,15 +1,11 @@
 import gql from 'graphql-tag'
+import { POST_FRAGMENT } from './fragments/post'
 
 const POST_MUTATION = gql`
+	${POST_FRAGMENT}
 	mutation PostMutation($description: String!, $url: String!, $title: String!) {
 		post(description: $description, url: $url, title: $title) {
-			id
-			createdAt
-			url
-			image
-			title
-			description
-			slug
+			... postFragment
 		}
 	}
 `

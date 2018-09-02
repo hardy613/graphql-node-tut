@@ -11,18 +11,30 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div>
-				<div>
-					Search
+			<div className='container'>
+				<div className='form-group'>
+					<label htmlFor='search' className='form-label'>
+						Search
+					</label>
 					<input
+						id='search'
+						name='search'
+						className='form-input'
 						type='text'
 						onChange={e => this.setState({ filter: e.target.value })}
 					/>
-					<button onClick={() => this._executeSearch()}>OK</button>
 				</div>
+				<div className='form-group'>
+					<button 
+						onClick={() => this._executeSearch()}
+						className='btn btn-primary'
+					>OK</button>
+				</div>
+				<div className='grid-lg'>
 				{this.state.posts.map((post, index) => (
 					<Post key={post.id} post={post} index={index} />
 				))}
+				</div>
 			</div>
 		)
 	}

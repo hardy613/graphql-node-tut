@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { AUTH_TOKEN } from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../actions/mutation'
 
 class Login extends Component {
@@ -20,37 +19,40 @@ class Login extends Component {
       <p>{login ? 'Login' : 'Sign Up'}</p>
           {!login && (
         	<div className='form-group'>
-						<label className='form-label'>Name</label>
+						<label htmlFor='name' className='form-label'>Name</label>
             <input
 							id='name'
+							name='name'
 							className='form-input'
               value={name}
               onChange={e => this.setState({ name: e.target.value })}
-              type="text"
-              placeholder="Your name"
+              type='text'
+              placeholder='Your name'
             />
 					</div>
           )}
 				<div className='form-group'>
-					<label className='form-label'>Email</label>
+					<label htmlFor='email' className='form-label'>Email</label>
           <input
 						id='email'
+						name='email'
 						className='form-input'
             value={email}
             onChange={e => this.setState({ email: e.target.value })}
-            type="text"
-            placeholder="Your email address"
+            type='email'
+            placeholder='Your email address'
           />
 				</div>
 				<div className='form-group'>
-					<label className='form-label'>Password</label>
+					<label htmlFor='password' className='form-label'>Password</label>
           <input
 						id='password'
+						name='password'
 						className='form-input'
             value={password}
             onChange={e => this.setState({ password: e.target.value })}
-            type="password"
-            placeholder={!login ? "Choose a safe password" : "Your password"}
+            type='password'
+            placeholder={!login ? 'Choose a safe password' : 'Your password'}
           />
         </div>
         <div className='form-group'>

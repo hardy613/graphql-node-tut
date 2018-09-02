@@ -1,52 +1,39 @@
 import gql from 'graphql-tag'
+import { 
+	POST_FRAGMENT, 
+	POST_META_FRAGMENT,
+} from './fragments/post'
 
 const FEED_QUERY = gql`
-	{
-		feed {
+	${POST_FRAGMENT}
+	${POST_META_FRAGMENT}
+	query FeedQuery(
+		$first: Int
+		$skip: Int
+		$orderBy: PostOrderByInput
+		) {
+		feed (
+			first: $first
+			skip: $skip
+			orderBy: $orderBy
+			) {
+			count
 			posts {
-				id
-				createdAt
-				url
-				title
-				image
-				description
-				slug
-				postedBy {
-					id
-					name
-				}
-				votes {
-					id
-					user {
-						id
-					}
-				}
+				... postFragment
+				... postMetaFragment
 			}
 		}
 	}
 `
 
 const FEED_SEARCH_QUERY = gql`
+	${POST_FRAGMENT}
+	${POST_META_FRAGMENT}
   query FeedSearchQuery($filter: String!) {
     feed(filter: $filter) {
       posts {
-				id
-				createdAt
-				url
-				title
-				image
-				description
-				slug
-        postedBy {
-          id
-          name
-        }
-        votes {
-          id
-          user {
-            id
-          }
-        }
+				... postFragment
+				... postMetaFragment
       }
     }
   }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import { POST_MUTATION } from '../actions/mutation'
 import { FEED_QUERY } from '../actions/query'
+import { POSTS_PER_PAGE } from '../constants'
 
 class CreatePost extends Component {
 
@@ -17,8 +17,10 @@ class CreatePost extends Component {
 		return (
 			<div className='container'>
 				<div className='form-group'>
-					<label className='form-label'>Link</label>
+					<label htmlFor='url' className='form-label'>Link</label>
 					<input
+						id='url'
+						name='url'
 						className='form-input'
 						value={url}
 						onChange={e => this.setState({ url: e.target.value })}
@@ -27,8 +29,10 @@ class CreatePost extends Component {
 						/>
 				</div>
 				<div className='form-group'>
-					<label className='form-label'>Title</label>
+					<label htmlFor='title'  className='form-label'>Title</label>
 					<input
+						id='title'
+						name='title'
 						className='form-input'
 						value={title}
 						onChange={e => this.setState({ title: e.target.value })}
@@ -37,8 +41,10 @@ class CreatePost extends Component {
 						/>
 				</div>
 				<div className='form-group'>
-					<label className='form-label'>Description</label>
+					<label htmlFor='description' className='form-label'>Description</label>
 					<textarea
+						id='description'
+						name='description'
 						className='form-input'
 						value={description}
 						onChange={e => this.setState({ description: e.target.value })}
@@ -50,14 +56,22 @@ class CreatePost extends Component {
 					<Mutation
 						mutation={POST_MUTATION}
 						variables={{ title, description, url, image }}
-						onCompleted={() => this.props.history.push('/')}
+						onCompleted={() => this.props.history.push('/new')}
 						update={(store, {data: { post }}) => {
-							const data = store.readQuery({ query: FEED_QUERY })
+							const first = POSTS_PER_PAGE
+							const skip = 0
+							const orderBy = 'createdAt_DESC'
+							const variables = { first, skip, orderBy }
+							const data = store.readQuery({
+								query: FEED_QUERY,
+								variables,
+							})
 							post.votes = []
 							data.feed.posts.unshift(post)
 							store.writeQuery({
 								query: FEED_QUERY,
 								data,
+								variables,
 							})
 						}}
 						>

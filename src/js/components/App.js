@@ -7,18 +7,19 @@ import Sidebar from './Sidebar'
 import Login from './Login'
 import Logout from './Logout'
 import Outbound from './Outbound'
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 class App extends Component {
 	render() {
 		return (
-			<BrowserRouter>
 				<div>
 					<Header />
-					<Sidebar />
 					<div>
+						<Sidebar />
 						<Switch>
-							<Route exact path='/' component={PostList} />
+							<Route exact path="/" render={() => <Redirect to="/new" />} />
+							<Route path='/new/:page?' component={PostList} />
+							<Route path='/top' component={PostList} />
 							<Route path='/create' component={CreatePost} />
 							<Route path='/search' component={Search} />
 							<Route path='/login' component={Login} />
@@ -27,7 +28,6 @@ class App extends Component {
 						</Switch>
 					</div>
 				</div>
-			</BrowserRouter>
 		)
 	}
 }

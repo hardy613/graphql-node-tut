@@ -17,12 +17,11 @@ class Header extends Component {
 		return (
 			<header className='navbar'> 
 			<section className='navbar-section'>
-				<a className='btn btn-link btn-action'>
-					<i className='icon icon-menu'></i>
-				</a>
-
-				<Link to='/' className='btn btn-link'>
+				<Link to='/new' className='btn btn-link'>
            feed
+				</Link>
+				<Link to='/top' className='btn btn-link'>
+           top
 				</Link>
 				<Link to='/create' className='btn btn-link'>
            submit
