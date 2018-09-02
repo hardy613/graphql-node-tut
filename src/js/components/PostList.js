@@ -7,8 +7,14 @@ import {
 	NEW_VOTES_SUBSCRIPTION,
 } from '../actions/subscription'
 import { POSTS_PER_PAGE } from '../constants'
+import ReactRouterPropTypes from 'react-router-prop-types'
 
 class PostList extends Component {
+	static propTypes = {
+		history: ReactRouterPropTypes.history.isRequired,
+		location: ReactRouterPropTypes.location.isRequired,
+		match: ReactRouterPropTypes.match.isRequired,
+	}
 
 	_updateCacheAfterVote = (store, createVote, postId) => {
 		const isNewPage = this.props.location.pathname.includes('new')
@@ -127,7 +133,7 @@ class PostList extends Component {
 											<a onClick={() => this._nextPage(data)}>Next</a>
 										</li>
 									</ul>
-      		      )}
+								)}
 							</Fragment>
 						</div>
 					)

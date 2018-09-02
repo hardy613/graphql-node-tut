@@ -3,14 +3,19 @@ import { AUTH_TOKEN } from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
 import { SIGNUP_MUTATION, LOGIN_MUTATION } from '../actions/mutation'
+import ReactRouterPropTypes from 'react-router-prop-types'
 
 class Login extends Component {
   state = {
-    login: true, // switch between Login and SignUp
-    email: '',
+    login: true,
+		email: '',
     password: '',
     name: '',
   }
+
+	static propTypes = {
+		history: ReactRouterPropTypes.history.isRequired
+	}
 
   render() {
     const { login, email, password, name } = this.state
@@ -18,9 +23,9 @@ class Login extends Component {
       <div className='container'>
       <p>{login ? 'Login' : 'Sign Up'}</p>
           {!login && (
-        	<div className='form-group'>
-						<label htmlFor='name' className='form-label'>Name</label>
-            <input
+						<div className='form-group'>
+							<label htmlFor='name' className='form-label'>Name</label>
+							<input
 							id='name'
 							name='name'
 							className='form-input'

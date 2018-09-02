@@ -5,8 +5,15 @@ import { AUTH_TOKEN } from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
 import { VOTE_MUTATION } from '../actions/mutation'
+import PropTypes from 'prop-types'
 
 class Post extends Component {
+
+	static propTypes = {
+		updateStoreAfterVote: PropTypes.func.isRequired,
+		post: PropTypes.object.isRequired,
+	}
+
 	_getHostname(url) {
 		const link = document.createElement('a')
 		link.href = url

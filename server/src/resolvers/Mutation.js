@@ -45,7 +45,7 @@ async function post(parent, args, context, info) {
 	} = args
 	url = url.trim()
 	description = description.trim()
-	title = title.trim();
+	title = title.trim()
 	if(!isUrl(url)) {
 		throw new Error('Invaild url')
 	}

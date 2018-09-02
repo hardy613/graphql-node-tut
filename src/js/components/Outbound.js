@@ -1,9 +1,15 @@
 import { Component } from 'react'
+import ReactRouterPropTypes from 'react-router-prop-types'
 
 class Outbound extends Component {
+
+	static propTypes = {
+		match: ReactRouterPropTypes.match.isRequired,
+	}
+
 	componentDidMount() { 
 		const { slug } = this.props.match.params
-		return fetch('http://localhost:4000', {
+		return fetch(process.env.HTTP_URI, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ query: `query getPostBySlug{
@@ -13,12 +19,12 @@ class Outbound extends Component {
 						}
 					}
 				`
-			}),
+			})
 		})
 			.then(res => res.json())
 			.then(res => res.data.getPostBySlug)
 			.then(data => {
-				return fetch('http://localhost:4000', {
+				return fetch(process.env.HTTP_URI, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ query: `mutation ViewPostMutation {
@@ -29,13 +35,16 @@ class Outbound extends Component {
 								}
 							}				
 						`
-					}),
+					})
 				})
 			})
 			.then(res => res.json())
 			.then(res => window.location.replace(res.data.viewPost.url))
 	}
 
-	render() {return null}
+	render() { 
+		return null
+	}
 }
+
 export default Outbound

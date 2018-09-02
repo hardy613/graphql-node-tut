@@ -2,11 +2,19 @@ import React, { Component } from 'react'
 import { withApollo } from 'react-apollo'
 import Post from './Post'
 import { FEED_SEARCH_QUERY } from '../actions/query'
+import PropTypes from 'prop-types'
+
 class Search extends Component {
 
 	state = {
 		posts: [],
 		filter: ''
+	}
+
+	static propTypes = {
+		client: {
+			query: PropTypes.func.required
+		}
 	}
 
 	render() {
@@ -31,9 +39,9 @@ class Search extends Component {
 					>OK</button>
 				</div>
 				<div className='grid-lg'>
-				{this.state.posts.map((post, index) => (
-					<Post key={post.id} post={post} index={index} />
-				))}
+					{this.state.posts.map((post, index) => (
+						<Post key={post.id} post={post} index={index} />
+					))}
 				</div>
 			</div>
 		)

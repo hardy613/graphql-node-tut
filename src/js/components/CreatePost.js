@@ -3,12 +3,17 @@ import { Mutation } from 'react-apollo'
 import { POST_MUTATION } from '../actions/mutation'
 import { FEED_QUERY } from '../actions/query'
 import { POSTS_PER_PAGE } from '../constants'
+import ReactRouterPropTypes from 'react-router-prop-types'
 
 class CreatePost extends Component {
 	state = {
 		title: '',
 		description: '',
 		url: '',
+	}
+	
+	static propTypes = {
+		history: ReactRouterPropTypes.history.isRequired
 	}
 	
 	render() {
@@ -25,7 +30,7 @@ class CreatePost extends Component {
 						onChange={e => this.setState({ url: e.target.value })}
 						type='text'
 						placeholder='https://example.com'
-						/>
+					/>
 				</div>
 				<div className='form-group'>
 					<label htmlFor='title'  className='form-label'>Title</label>
@@ -37,7 +42,7 @@ class CreatePost extends Component {
 						onChange={e => this.setState({ title: e.target.value })}
 						type='text'
 						placeholder='Give your link a title'
-						/>
+					/>
 				</div>
 				<div className='form-group'>
 					<label htmlFor='description' className='form-label'>Description</label>
@@ -49,7 +54,7 @@ class CreatePost extends Component {
 						onChange={e => this.setState({ description: e.target.value })}
 						type='text'
 						placeholder='Describe your link'
-						></textarea>
+					></textarea>
 				</div>
 				<div className='form-group'>
 					<Mutation
@@ -73,7 +78,7 @@ class CreatePost extends Component {
 								variables,
 							})
 						}}
-						>
+					>
 						{postMutation => <button className='btn btn-primary' onClick={postMutation}>Submit</button>}
 					</Mutation>
 				</div>
