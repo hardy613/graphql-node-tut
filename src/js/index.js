@@ -28,27 +28,27 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-  uri: process.env.WS_URI,
-  options: {
-    reconnect: true,
-    connectionParams: {
-      authToken: cookies.getItem(AUTH_TOKEN),
-    }
-  }
+	uri: process.env.WS_URI,
+	options: {
+		reconnect: true,
+		connectionParams: {
+			authToken: cookies.getItem(AUTH_TOKEN),
+		}
+	}
 })
 
 const link = split(
-  ({ query }) => {
-    const { kind, operation } = getMainDefinition(query)
-    return kind === 'OperationDefinition' && operation === 'subscription'
-  },
-  wsLink,
-  authLink.concat(httpLink)
+	({ query }) => {
+		const { kind, operation } = getMainDefinition(query)
+		return kind === 'OperationDefinition' && operation === 'subscription'
+	},
+	wsLink,
+	authLink.concat(httpLink)
 )
 
 const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache()
+	link,
+	cache: new InMemoryCache()
 })
 
 ReactDOM.render(
