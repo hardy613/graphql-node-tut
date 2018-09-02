@@ -33,20 +33,20 @@ const NEW_POSTS_SUBSCRIPTION = gql`
 const NEW_VOTES_SUBSCRIPTION = gql`
 	${POST_FRAGMENT}
 	${POST_META_FRAGMENT}
-  subscription {
-    newVote {
-      node {
-        id
-        post {
+	subscription {
+		newVote {
+			node {
+				id
+				post {
 					... postFragment
 					... postMetaFragment
-        }
-        user {
-          id
-        }
-      }
-    }
-  }
+				}
+				user {
+					id
+				}
+			}
+		}
+	}
 `
 
 export {

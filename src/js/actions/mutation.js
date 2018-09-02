@@ -11,38 +11,38 @@ const POST_MUTATION = gql`
 `
 
 const SIGNUP_MUTATION = gql`
-  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name) {
-      token
-    }
-  }
+	mutation SignupMutation($email: String!, $password: String!, $name: String!) {
+		signup(email: $email, password: $password, name: $name) {
+			token
+		}
+	}
 `
 
 const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
+	mutation LoginMutation($email: String!, $password: String!) {
+		login(email: $email, password: $password) {
+			token
+		}
+	}
 `
 
 const VOTE_MUTATION = gql`
-  mutation VoteMutation($postId: ID!) {
-    vote(postId: $postId) {
-      id
-      post {
-        votes {
-          id
-          user {
-            id
-          }
-        }
-      }
-      user {
-        id
-      }
-    }
-  }
+	mutation VoteMutation($postId: ID!) {
+		vote(postId: $postId) {
+			id
+			post {
+				votes {
+					id
+					user {
+						id
+					}
+				}
+			}
+			user {
+				id
+			}
+		}
+	}
 `
 
 export {
