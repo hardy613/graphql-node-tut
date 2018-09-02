@@ -18,28 +18,28 @@ class Header extends Component {
 			<header className='navbar'> 
 				<section className='navbar-section'>
 					<Link to='/new' className='btn btn-link'>
-           feed
+						feed
 					</Link>
 					<Link to='/top' className='btn btn-link'>
-           top
+						top
 					</Link>
 					<Link to='/create' className='btn btn-link'>
-           submit
+						submit
 					</Link>
 					<Link to='/search' className='btn btn-link'>
-           search
+						search
 					</Link>
 				</section>
 				<section className='navbar-section'>
-					{this.authToken ? (
-						<Link to='/logout' className='btn btn-primary'>
-           logout
-						</Link>
-					) : (
-						<Link to='/login' className='btn btn-primary'>
-           login
-						</Link>
-					)}
+				{this.authToken ? (
+					<Link to='/logout' className='btn btn-primary'>
+						logout
+					</Link>
+				) : (
+					<Link to='/login' className='btn btn-primary'>
+						login
+					</Link>
+				)}
 				</section>
 			</header>
 		)
