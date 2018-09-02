@@ -5,7 +5,6 @@ import { FEED_QUERY } from '../actions/query'
 import { POSTS_PER_PAGE } from '../constants'
 
 class CreatePost extends Component {
-
 	state = {
 		title: '',
 		description: '',

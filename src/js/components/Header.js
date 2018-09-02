@@ -16,31 +16,31 @@ class Header extends Component {
 	render() {
 		return (
 			<header className='navbar'> 
-			<section className='navbar-section'>
-				<Link to='/new' className='btn btn-link'>
+				<section className='navbar-section'>
+					<Link to='/new' className='btn btn-link'>
            feed
-				</Link>
-				<Link to='/top' className='btn btn-link'>
+					</Link>
+					<Link to='/top' className='btn btn-link'>
            top
-				</Link>
-				<Link to='/create' className='btn btn-link'>
+					</Link>
+					<Link to='/create' className='btn btn-link'>
            submit
-				</Link>
-				<Link to='/search' className='btn btn-link'>
+					</Link>
+					<Link to='/search' className='btn btn-link'>
            search
-				</Link>
-			</section>
-			<section className='navbar-section'>
-				{this.authToken ? (
-					<Link to='/logout' className='btn btn-primary'>
+					</Link>
+				</section>
+				<section className='navbar-section'>
+					{this.authToken ? (
+						<Link to='/logout' className='btn btn-primary'>
            logout
-					</Link>
-				) : (
-					<Link to='/login' className='btn btn-primary'>
+						</Link>
+					) : (
+						<Link to='/login' className='btn btn-primary'>
            login
-					</Link>
-				)}
-			</section>
+						</Link>
+					)}
+				</section>
 			</header>
 		)
 	}

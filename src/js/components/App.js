@@ -12,22 +12,22 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 class App extends Component {
 	render() {
 		return (
+			<div>
+				<Header />
 				<div>
-					<Header />
-					<div>
-						<Sidebar />
-						<Switch>
-							<Route exact path="/" render={() => <Redirect to="/new" />} />
-							<Route path='/new/:page?' component={PostList} />
-							<Route path='/top' component={PostList} />
-							<Route path='/create' component={CreatePost} />
-							<Route path='/search' component={Search} />
-							<Route path='/login' component={Login} />
-							<Route path='/logout' component={Logout} />
-							<Route path='/-/:slug' component={Outbound} />
-						</Switch>
-					</div>
+					<Sidebar />
+					<Switch>
+						<Route exact path="/" render={() => <Redirect to="/new" />} />
+						<Route path='/new/:page?' component={PostList} />
+						<Route path='/top' component={PostList} />
+						<Route path='/create' component={CreatePost} />
+						<Route path='/search' component={Search} />
+						<Route path='/login' component={Login} />
+						<Route path='/logout' component={Logout} />
+						<Route path='/-/:slug' component={Outbound} />
+					</Switch>
 				</div>
+			</div>
 		)
 	}
 }

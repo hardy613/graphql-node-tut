@@ -29,14 +29,14 @@ const FEED_QUERY = gql`
 const FEED_SEARCH_QUERY = gql`
 	${POST_FRAGMENT}
 	${POST_META_FRAGMENT}
-  query FeedSearchQuery($filter: String!) {
-    feed(filter: $filter) {
-      posts {
+	query FeedSearchQuery($filter: String!) {
+		feed(filter: $filter) {
+			posts {
 				... postFragment
-				... postMetaFragment
-      }
-    }
-  }
+					... postMetaFragment
+			}
+		}
+	}
 `
 
 export {

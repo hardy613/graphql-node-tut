@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import { graphql } from 'react-apollo'
 
 class Outbound extends Component {
 	componentDidMount() { 

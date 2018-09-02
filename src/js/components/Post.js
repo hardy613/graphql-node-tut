@@ -7,6 +7,12 @@ import { Mutation } from 'react-apollo'
 import { VOTE_MUTATION } from '../actions/mutation'
 
 class Post extends Component {
+	_getHostname(url) {
+		const link = document.createElement('a')
+		link.href = url
+		return link.hostname
+	}
+
 	render() {
 		const authToken = cookies.getItem(AUTH_TOKEN)
 		const {
@@ -19,22 +25,23 @@ class Post extends Component {
 			createdAt,
 			postedBy
 		} = this.props.post
-
+		const domain = this._getHostname(url)	
 		return (
 			<div className='card'>
 				{!image ? '' :
-				(<div className='card-image'>
-					<img src={image} className='img-responsive' />
-				</div>)}
+					(<div className='card-image'>
+						<img src={image} className='img-responsive' />
+					</div>)}
 				<div className='card-header'>
 					<p className='card-title h5'>
 						<Link to={'/-/' + slug} target='_blank'>{title}</Link>
+						{' '}<span className='domain'>({domain})</span>
 					</p>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}
 						{postedBy ? postedBy.name
 							: 'Unknown'}{' - '}
-								{moment(createdAt).fromNow()}
+						{moment(createdAt).fromNow()}
 					</p>
 				</div>
 				<div className='card-body'>{description}</div>
@@ -47,19 +54,19 @@ class Post extends Component {
 								this.props.updateStoreAfterVote(store, vote, this.props.post.id)
 							}
 						>
-						{voteMutation => (
-							<p>
-								<a 
-									className='btn btn-primary' 
-									onClick={voteMutation}>
+							{voteMutation => (
+								<p>
+									<a 
+										className='btn btn-primary' 
+										onClick={voteMutation}>
 									Like
-								</a>
-							</p>)}
+									</a>
+								</p>)}
 						</Mutation>)}
 					<p>
 						<sub>{votes.length} likes</sub>
 					</p>
-			</div>
+				</div>
 			</div>
 		)
 	}
