@@ -16,7 +16,7 @@ const FEED_QUERY = gql`
 			first: $first
 			skip: $skip
 			orderBy: $orderBy
-			) {
+		) {
 			count
 			posts {
 				... postFragment
@@ -33,7 +33,7 @@ const FEED_SEARCH_QUERY = gql`
 		feed(filter: $filter) {
 			posts {
 				... postFragment
-					... postMetaFragment
+				... postMetaFragment
 			}
 		}
 	}
