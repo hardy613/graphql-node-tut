@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withApollo } from 'react-apollo'
-import Post from './Post'
+import PostItem from './PostItem'
 import { FEED_SEARCH_QUERY } from '../actions/query'
 import PropTypes from 'prop-types'
 
@@ -17,7 +17,8 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div className='search-page'>
+			<section>
+				<h1 className='h4'>search posts</h1>
 				<div className='input-group'>
 					<input
 						id='search'
@@ -37,10 +38,15 @@ class Search extends Component {
 						<p className='h5'>results</p>
 					)}
 					{this.state.posts.map((post, index) => (
-						<Post key={post.id} post={post} index={index} />
+						<PostItem 
+							key={post.id}
+							post={post}
+							index={index}
+							isSearch={true}
+						/>
 					))}
 				</div>
-			</div>
+			</section>
 		)
 	}
 

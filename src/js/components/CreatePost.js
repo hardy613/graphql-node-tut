@@ -19,9 +19,10 @@ class CreatePost extends Component {
 	render() {
 		const { description, url, title, image = '' } = this.state
 		return (
-			<div>
+			<section>
+				<h1 className='h4'>create a post</h1>
 				<div className='form-group'>
-					<label htmlFor='url' className='form-label'>Link</label>
+					<label htmlFor='url' className='form-label'>link</label>
 					<input
 						id='url'
 						name='url'
@@ -33,7 +34,7 @@ class CreatePost extends Component {
 					/>
 				</div>
 				<div className='form-group'>
-					<label htmlFor='title'  className='form-label'>Title</label>
+					<label htmlFor='title'  className='form-label'>title</label>
 					<input
 						id='title'
 						name='title'
@@ -45,7 +46,7 @@ class CreatePost extends Component {
 					/>
 				</div>
 				<div className='form-group'>
-					<label htmlFor='description' className='form-label'>Description</label>
+					<label htmlFor='description' className='form-label'>description</label>
 					<textarea
 						id='description'
 						name='description'
@@ -79,10 +80,10 @@ class CreatePost extends Component {
 							})
 						}}
 					>
-						{postMutation => <button className='btn btn-primary' onClick={postMutation}>Submit</button>}
+						{postMutation => <button className='btn btn-primary' onClick={postMutation}>submit</button>}
 					</Mutation>
 				</div>
-			</div>
+			</section>
 		)
 	}
 }

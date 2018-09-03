@@ -16,7 +16,7 @@ class Header extends Component {
 	render() {
 		return (
 			<header id='site-header' className='navbar sticky'> 
-				<section className='navbar-section'>
+				<div className='navbar-section'>
 					<Link to='/new' className='btn btn-link'>
 						new
 					</Link>
@@ -29,8 +29,8 @@ class Header extends Component {
 					<Link to='/search' className='btn btn-link'>
 						search
 					</Link>
-				</section>
-				<section className='navbar-section'>
+				</div>
+				<div className='navbar-section'>
 				{this.authToken ? (
 					<Link to='/logout' className='btn btn-primary'>
 						logout
@@ -40,7 +40,7 @@ class Header extends Component {
 						login
 					</Link>
 				)}
-				</section>
+				</div>
 			</header>
 		)
 	}

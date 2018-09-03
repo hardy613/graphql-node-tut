@@ -20,11 +20,11 @@ class Login extends Component {
 	render() {
 		const { login, email, password, name } = this.state
 		return (
-			<div>
-				<p>{login ? 'Login' : 'Sign Up'}</p>
+			<section>
+				<h1 className='h4'>{login ? 'login' : 'sign Up'}</h1>
 				{!login && (
 					<div className='form-group'>
-						<label htmlFor='name' className='form-label'>Name</label>
+						<label htmlFor='name' className='form-label'>name</label>
 						<input
 							id='name'
 							name='name'
@@ -37,7 +37,7 @@ class Login extends Component {
 					</div>
 				)}
 				<div className='form-group'>
-					<label htmlFor='email' className='form-label'>Email</label>
+					<label htmlFor='email' className='form-label'>email</label>
 					<input
 						id='email'
 						name='email'
@@ -49,7 +49,7 @@ class Login extends Component {
 					/>
 				</div>
 				<div className='form-group'>
-					<label htmlFor='password' className='form-label'>Password</label>
+					<label htmlFor='password' className='form-label'>password</label>
 					<input
 						id='password'
 						name='password'
@@ -78,7 +78,7 @@ class Login extends Component {
 							: 'already have an account?'}
 					</a>
 				</div>
-			</div>
+			</section>
 		)
 	}
 

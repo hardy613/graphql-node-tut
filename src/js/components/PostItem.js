@@ -7,11 +7,12 @@ import { Mutation } from 'react-apollo'
 import { VOTE_MUTATION } from '../actions/mutation'
 import PropTypes from 'prop-types'
 
-class Post extends Component {
+class PostItem extends Component {
 
 	static propTypes = {
 		updateStoreAfterVote: PropTypes.func,
 		post: PropTypes.object.isRequired,
+		isSearch: PropTypes.bool.isRequired,
 	}
 
 	_getHostname(url) {
@@ -33,18 +34,20 @@ class Post extends Component {
 			createdAt,
 			postedBy
 		} = this.props.post
+		const { isSearch } = this.props
 		const hostname = this._getHostname(url)	
 		return (
-			<div className='card'>
+			<article className='card'>
+				<header>
 				{!image ? '' :
 					(<div className='card-image'>
 						<img src={image} className='img-responsive' />
 					</div>)}
 				<div className='card-header'>
-					<p className='card-title h5'>
+					<h2 className='card-title h5'>
 						<Link to={'/-?' + slug} target='_blank'>{title}</Link>
 						{' '}<span className='domain text-break'>{hostname}</span>
-					</p>
+					</h2>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}
 						{postedBy ? postedBy.name
@@ -52,32 +55,35 @@ class Post extends Component {
 						{moment(createdAt).fromNow()}
 					</p>
 				</div>
+				</header>
 				<div className='card-body'>{description}</div>
-				<div className='card-footer'>
+				<footer className='card-footer'>
 					{authToken && (
 						<Mutation 
 							mutation={VOTE_MUTATION}
 							variables={{ postId: this.props.post.id }}
-							update={(store, { data: { vote } }) =>
-								this.props.updateStoreAfterVote(store, vote, this.props.post.id)
-							}
+							update={(store, { data: { vote } }) => {
+								if(typeof this.props.updateStoreAfterVote === 'function') {
+									this.props.updateStoreAfterVote(store, vote, this.props.post.id)
+								}
+							}}
 						>
-							{voteMutation => (
+							{voteMutation => !isSearch && (
 								<p>
-									<a 
+									<button 
 										className='btn btn-primary' 
 										onClick={voteMutation}>
 									like
-									</a>
+									</button>
 								</p>)}
 						</Mutation>)}
 					<p>
 						<sub>{votes.length} likes | {views} views</sub>
 					</p>
-				</div>
-			</div>
+				</footer>
+			</article>
 		)
 	}
 }
 
-export default Post
+export default PostItem

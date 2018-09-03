@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Post from './Post'
+import PostItem from './PostItem'
 import { Query } from 'react-apollo'
 import { FEED_QUERY } from '../actions/query'
 import {
@@ -115,13 +115,17 @@ class PostList extends Component {
 					const pageIndex = isNewPage ? (page - 1) * POSTS_PER_PAGE : 0
 						
 					return (
-						<div>
+						<section>
+							<h1 className='h4'>
+								{isNewPage ? 'new posts' : 'top 100 posts'}
+							</h1>
 							<Fragment>
 								{posts
-									.map((post, index) => <Post 
+									.map((post, index) => <PostItem 
 										key={post.id} 
 										post={post} 
 										index={index + pageIndex} 
+										isSearch={false}
 										updateStoreAfterVote={this._updateCacheAfterVote}
 									/>)}
 								{isNewPage && (
@@ -135,7 +139,7 @@ class PostList extends Component {
 									</ul>
 								)}
 							</Fragment>
-						</div>
+						</section>
 					)
 				}}
 			</Query>

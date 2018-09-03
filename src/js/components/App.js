@@ -15,7 +15,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
+			<main role='main'>
 				<Header />
 				<div id='body' className='container grid-lg'>
 					<Switch>
@@ -28,7 +28,7 @@ class App extends Component {
 						<Route path='/logout' component={Logout} />
 					</Switch>
 				</div>
-			</div>
+			</main>
 		)
 	}
 }
