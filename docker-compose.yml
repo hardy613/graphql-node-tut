@@ -1,6 +1,8 @@
 version: '3'
 services:
   prisma:
+    env_file:
+      - .env
     depends_on: 
       - db
     image: prismagraphql/prisma:1.13
@@ -8,9 +10,8 @@ services:
     ports:
     - 4466:4466
     environment:
-      NODE_ENV: development
       PRISMA_CONFIG: |
-        managementApiSecret: mysecret123
+        managementApiSecret: ${DB_SECRET}
         port: 4466
         databases:
           default:
@@ -18,14 +19,12 @@ services:
             active: true
             host: db
             port: 5432
-            user: postgres
-            password: postgres
+            user: ${POSTGRES_USER}
+            password: ${POSTGRES_PASSWORD}
   db:
+    env_file:
+      - .env
     image: sly613/dev-psql
     ports:
       - 5432:5432
-    restart: always
-    environment:
-      NODE_ENV: development
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    restart: always 

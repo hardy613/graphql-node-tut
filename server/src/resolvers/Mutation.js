@@ -51,7 +51,7 @@ async function post(parent, args, context, info) {
 		throw new Error('Invaild url')
 	}
 	const userId = getUserId(context)
-	const slug = hash(`${moment().millisecond() + url}`, MAX_SHORT_URL_LENGTH)
+	const slug = hash(`${moment().millisecond() + url}`)
 	return context.db.mutation.createPost(
 		{
 			data: {

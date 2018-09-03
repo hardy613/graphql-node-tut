@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --content-base src --inline --hot --mode development --no-babelrc",
     "start-server": "node -r dotenv/config ./server/src/index.js",
-    "lint": "eslint '**/*.js' --fix",
+		"prisma-deploy": "cd ./server && prisma deploy -e \"../.env\"",
+    "lint": "eslint \"**/*.js\" --fix",
     "build": "webpack --mode production"
   },
   "author": "Scott Hardy",
