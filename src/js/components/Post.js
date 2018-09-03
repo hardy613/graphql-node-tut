@@ -43,7 +43,7 @@ class Post extends Component {
 				<div className='card-header'>
 					<p className='card-title h5'>
 						<Link to={'/-?' + slug} target='_blank'>{title}</Link>
-						{' '}<span className='domain'>({hostname})</span>
+						{' '}<span className='domain text-break'>{hostname}</span>
 					</p>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}

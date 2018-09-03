@@ -1,9 +1,11 @@
 @import './vendors/normalize';
 
+@import './components/_variables';
+
 @import '../../node_modules/spectre.css/src/spectre';
 @import '../../node_modules/spectre.css/src/spectre-exp';
 @import '../../node_modules/spectre.css/src/spectre-icons';
 
 @import './components/header';
-@import './components/sidebar';
+@import './components/search';
 @import './components/post';

@@ -17,7 +17,7 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className='search-page'>
 				<div className='input-group'>
 					<input
 						id='search'
@@ -33,6 +33,9 @@ class Search extends Component {
 					>search</button>
 				</div>
 				<div id='results'>
+					{this.state.posts.length > 0 && (
+						<p className='h5'>results</p>
+					)}
 					{this.state.posts.map((post, index) => (
 						<Post key={post.id} post={post} index={index} />
 					))}
