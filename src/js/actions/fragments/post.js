@@ -24,5 +24,6 @@ export const POST_FRAGMENT = gql`
 		image
 		description
 		slug
+		views
 	}
 `

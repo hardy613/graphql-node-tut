@@ -29,6 +29,7 @@ class Post extends Component {
 			url,
 			slug,
 			votes,
+			views,
 			createdAt,
 			postedBy
 		} = this.props.post
@@ -71,7 +72,7 @@ class Post extends Component {
 								</p>)}
 						</Mutation>)}
 					<p>
-						<sub>{votes.length} likes</sub>
+						<sub>{votes.length} likes | {views} views</sub>
 					</p>
 				</div>
 			</div>

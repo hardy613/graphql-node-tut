@@ -10,8 +10,8 @@ window.onload = () => {
 						}
 					}
 				`
+			})
 		})
-	})
 		.then(res => res.json())
 		.then(res => res.data.getPostBySlug)
 		.then(data => {
