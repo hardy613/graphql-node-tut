@@ -50,6 +50,9 @@ async function post(parent, args, context, info) {
 	if(!isUrl(url)) {
 		throw new Error('Invaild url')
 	}
+	if(!/https?:\/\//.test(url)) {
+		url = `http://${url}`
+	}
 	const userId = getUserId(context)
 	const slug = hash(`${moment().millisecond() + url}`)
 	return context.db.mutation.createPost(
