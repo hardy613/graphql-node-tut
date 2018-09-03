@@ -18,12 +18,12 @@ function isUrl(url = '') {
 	return url.match(regex)
 }
 
-function hash(url = '', max) {
+function hash(string = '', max) {
 	let hash = 0
 	let i = 0
-	if(!url.length) return hash
-	while(i < url.length) {
-		hash = ((hash << 5) - hash + url.charCodeAt(i++) << 0)
+	if(!string.length) return hash
+	while(i < string.length) {
+		hash = ((hash << 5) - hash + string.charCodeAt(i++) << 0)
 	}
 	hash = hash.toString(16)
 	if(!max || typeof max !== 'number') {
@@ -33,7 +33,6 @@ function hash(url = '', max) {
 }
 
 module.exports = {
-	APP_SECRET,
 	getUserId,
 	isUrl,
 	hash,

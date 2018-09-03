@@ -6,8 +6,18 @@ const Dotenv = require('dotenv-webpack')
 
 const dotEnv = new Dotenv()
 
-const htmlPlugin = new HtmlWebpackPlugin({
+const appHtmlPlugin = new HtmlWebpackPlugin({
+	filename: 'index.html',
 	template: resolve(__dirname, 'src/index.html'),
+	chunk: ['index'],
+	excludeChunks: ['outbound']
+})
+
+const outboundHtmlPlugin = new HtmlWebpackPlugin({
+	filename: '-/index.html',
+	template: resolve(__dirname, 'src/outbound.html'),
+	chunk: ['outbound'],
+	excludeChunks: ['app', 'style'],
 })
 
 const miniCssPlugin = new MiniCssExtractPlugin({
@@ -18,6 +28,7 @@ const miniCssPlugin = new MiniCssExtractPlugin({
 module.exports = {
 	entry: {
 		app: resolve(__dirname, 'src/js/index.js'),
+		outbound: resolve(__dirname, 'src/js/outbound.js'),
 		style: resolve(__dirname, 'src/scss/index.js'),
 	},
 	output: {
@@ -80,7 +91,8 @@ module.exports = {
 		historyApiFallback: true,
 	},
 	plugins: [
-		htmlPlugin,
+		appHtmlPlugin,
+		outboundHtmlPlugin,
 		miniCssPlugin,
 		dotEnv,
 	]

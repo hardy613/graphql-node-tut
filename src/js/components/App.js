@@ -5,7 +5,6 @@ import Search from './Search'
 import Header from './Header'
 import Login from './Login'
 import Logout from './Logout'
-import Outbound from './Outbound'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 class App extends Component {
@@ -27,7 +26,6 @@ class App extends Component {
 						<Route path='/search' component={Search} />
 						<Route path='/login' component={Login} />
 						<Route path='/logout' component={Logout} />
-						<Route path='/-/:slug' component={Outbound} />
 					</Switch>
 				</div>
 			</div>

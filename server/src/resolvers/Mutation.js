@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { getUserId, isUrl, hash } = require('../utils')
 const { MAX_SHORT_URL_LENGTH, APP_SECRET } = require('../constants')
+const moment= require('moment')
 
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
@@ -50,7 +51,7 @@ async function post(parent, args, context, info) {
 		throw new Error('Invaild url')
 	}
 	const userId = getUserId(context)
-	const slug = hash(url, MAX_SHORT_URL_LENGTH)
+	const slug = hash(`${moment().millisecond() + url}`, MAX_SHORT_URL_LENGTH)
 	return context.db.mutation.createPost(
 		{
 			data: {

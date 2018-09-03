@@ -32,7 +32,7 @@ class Post extends Component {
 			createdAt,
 			postedBy
 		} = this.props.post
-		const domain = this._getHostname(url)	
+		const hostname = this._getHostname(url)	
 		return (
 			<div className='card'>
 				{!image ? '' :
@@ -41,8 +41,8 @@ class Post extends Component {
 					</div>)}
 				<div className='card-header'>
 					<p className='card-title h5'>
-						<Link to={'/-/' + slug} target='_blank'>{title}</Link>
-						{' '}<span className='domain'>({domain})</span>
+						<Link to={'/-?' + slug} target='_blank'>{title}</Link>
+						{' '}<span className='domain'>({hostname})</span>
 					</p>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}
@@ -66,7 +66,7 @@ class Post extends Component {
 									<a 
 										className='btn btn-primary' 
 										onClick={voteMutation}>
-									Like
+									like
 									</a>
 								</p>)}
 						</Mutation>)}
