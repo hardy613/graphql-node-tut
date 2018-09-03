@@ -1,5 +1,17 @@
-.navbar-section {
+.navbar {
+
+	&.sticky {
+		position: fixed;
+		top: 0;
+		overflow: hidden;
+		width: 100%;
+		background-color: #ffffff;
+		padding-bottom: .25rem;
+		z-index: 1000;
+	}
+
 	.btn-primary {
 		margin: .25rem .5rem 0 0;
 	}
+	
 }

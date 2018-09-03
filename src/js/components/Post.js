@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 class Post extends Component {
 
 	static propTypes = {
-		updateStoreAfterVote: PropTypes.func.isRequired,
+		updateStoreAfterVote: PropTypes.func,
 		post: PropTypes.object.isRequired,
 	}
 

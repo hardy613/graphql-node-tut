@@ -12,33 +12,27 @@ class Search extends Component {
 	}
 
 	static propTypes = {
-		client: {
-			query: PropTypes.func.required
-		}
+		client: PropTypes.object.isRequired,
 	}
 
 	render() {
 		return (
-			<div className='container'>
-				<div className='form-group'>
-					<label htmlFor='search' className='form-label'>
-						Search
-					</label>
+			<div>
+				<div className='input-group'>
 					<input
 						id='search'
 						name='search'
 						className='form-input'
+						placeholder='search'
 						type='text'
 						onChange={e => this.setState({ filter: e.target.value })}
 					/>
-				</div>
-				<div className='form-group'>
 					<button 
 						onClick={() => this._executeSearch()}
-						className='btn btn-primary'
-					>OK</button>
+						className='btn btn-primary input-group-btn'
+					>search</button>
 				</div>
-				<div className='grid-lg'>
+				<div id='results'>
 					{this.state.posts.map((post, index) => (
 						<Post key={post.id} post={post} index={index} />
 					))}

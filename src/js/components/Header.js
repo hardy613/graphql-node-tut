@@ -15,10 +15,10 @@ class Header extends Component {
 
 	render() {
 		return (
-			<header className='navbar'> 
+			<header id='site-header' className='navbar sticky'> 
 				<section className='navbar-section'>
 					<Link to='/new' className='btn btn-link'>
-						feed
+						new
 					</Link>
 					<Link to='/top' className='btn btn-link'>
 						top

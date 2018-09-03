@@ -20,7 +20,7 @@ class Login extends Component {
 	render() {
 		const { login, email, password, name } = this.state
 		return (
-			<div className='container'>
+			<div>
 				<p>{login ? 'Login' : 'Sign Up'}</p>
 				{!login && (
 					<div className='form-group'>

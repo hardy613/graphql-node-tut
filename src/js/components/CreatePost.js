@@ -19,7 +19,7 @@ class CreatePost extends Component {
 	render() {
 		const { description, url, title, image = '' } = this.state
 		return (
-			<div className='container'>
+			<div>
 				<div className='form-group'>
 					<label htmlFor='url' className='form-label'>Link</label>
 					<input

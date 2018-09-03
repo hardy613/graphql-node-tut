@@ -115,7 +115,7 @@ class PostList extends Component {
 					const pageIndex = isNewPage ? (page - 1) * POSTS_PER_PAGE : 0
 						
 					return (
-						<div className='container grid-lg'>
+						<div>
 							<Fragment>
 								{posts
 									.map((post, index) => <Post 
@@ -127,10 +127,10 @@ class PostList extends Component {
 								{isNewPage && (
 									<ul className='pagination'>
 										<li className='page-item'>
-											<a onClick={this._previousPage}>Previous</a>
+											<a className='btn' onClick={this._previousPage}>Previous</a>
 										</li>
 										<li className='page-item'>
-											<a onClick={() => this._nextPage(data)}>Next</a>
+											<a className='btn' onClick={() => this._nextPage(data)}>Next</a>
 										</li>
 									</ul>
 								)}
