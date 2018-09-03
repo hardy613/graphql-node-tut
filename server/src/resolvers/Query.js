@@ -44,7 +44,7 @@ async function feed(parent, args, context) {
 async function getPostBySlug(parent, {slug}, context, info) {
 	const posts = await context.db.query.posts(
 		{ where: { slug }, first: 1, },
-		info,
+		'{ id views }',
 	)
 
 	if(!posts.length) {
