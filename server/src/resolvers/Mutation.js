@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { getUserId, isUrl, hash } = require('../utils')
-const { MAX_SHORT_URL_LENGTH, APP_SECRET } = require('../constants')
+const { APP_SECRET } = require('../constants')
 const moment= require('moment')
 
 async function signup(parent, args, context) {
