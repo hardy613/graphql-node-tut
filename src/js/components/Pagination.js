@@ -30,11 +30,10 @@ class Pagination extends Component {
 		this.props.history.push(`${this.props.pagePrefix}${page}`)
 	}
 
-	_buildPageButtons = pages => {
+	_paginationAsArray = pages => {
 		const page = parseInt(this.props.match.params.page || 1, 10)
-		let html = []
 		let buildPages = [1]
-
+		
 		if(page - 1 > 2 && pages >= 4) {
 			buildPages.push('...')
 		}
@@ -59,7 +58,13 @@ class Pagination extends Component {
 			buildPages.push(pages)
 		}
 
-		return buildPages.map((value, index) => {
+		return buildPages
+	}
+
+	_buildPageButtons = pages => {
+		const page = parseInt(this.props.match.params.page || 1, 10)
+
+		return this._paginationAsArray(pages).map((value, index) => {
 			const element = value === '...' ? (
 				<span>{value}</span>
 			) : (
