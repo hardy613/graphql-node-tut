@@ -82,16 +82,29 @@ class Pagination extends Component {
 	}
 
 	render() {
+		const page = parseInt(this.props.match.params.page || 1, 10)
 		const { count } = this.props
 		const pages = Math.ceil(count / POSTS_PER_PAGE)
 		return pages > 1 && (
 			<ul className='pagination'>
 				<li className='page-item'>
-					<button className='btn' onClick={this._previousPage}>previous</button>
+					<button
+						className={'btn' + (page <= 1 ? ' disabled' : '')}
+						onClick={this._previousPage}
+						disabled={page <= 1}
+					>
+						previous
+				</button>
 				</li>
 				{this._buildPageButtons(pages)}
 				<li className='page-item'>
-					<button className='btn' onClick={() => this._nextPage(count)}>next</button>
+					<button
+						className={'btn' + (page >= pages ? ' disabled' : '')}
+						onClick={() => this._nextPage(count)}
+						disabled={page >= pages}
+					>
+						next
+					</button>
 				</li>
 			</ul>
 		)
