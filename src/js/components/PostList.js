@@ -7,11 +7,11 @@ import {
 	NEW_VOTES_SUBSCRIPTION,
 } from '../actions/subscription'
 import { POSTS_PER_PAGE } from '../constants'
+import Pagination from './Pagination'
 import ReactRouterPropTypes from 'react-router-prop-types'
 
 class PostList extends Component {
 	static propTypes = {
-		history: ReactRouterPropTypes.history.isRequired,
 		location: ReactRouterPropTypes.location.isRequired,
 		match: ReactRouterPropTypes.match.isRequired,
 	}
@@ -77,20 +77,6 @@ class PostList extends Component {
 		return rankedPosts
 	}
 
-	_nextPage = data => {
-		const page = parseInt(this.props.match.params.page || 1, 10)
-		if (page < data.feed.count / POSTS_PER_PAGE) {
-			this.props.history.push(`/new/${page + 1}`)
-		}
-	}
-
-	_previousPage = () => {
-		const page = parseInt(this.props.match.params.page || 1, 10)
-		if (page > 1) {
-			this.props.history.push(`/new/${page - 1}`)
-		}
-	}
-
 	render() {
 		return (
 			<Query 
@@ -128,15 +114,12 @@ class PostList extends Component {
 										isSearch={false}
 										updateStoreAfterVote={this._updateCacheAfterVote}
 									/>)}
-								{isNewPage && (
-									<ul className='pagination'>
-										<li className='page-item'>
-											<a className='btn' onClick={this._previousPage}>Previous</a>
-										</li>
-										<li className='page-item'>
-											<a className='btn' onClick={() => this._nextPage(data)}>Next</a>
-										</li>
-									</ul>
+								{isNewPage && (data.feed.count / POSTS_PER_PAGE > 1 ) && (
+									<Pagination 
+										{...this.props}
+										count={data.feed.count}
+										pagePrefix='/new/'
+									/>
 								)}
 							</Fragment>
 						</section>

@@ -21,7 +21,7 @@ class Login extends Component {
 		const { login, email, password, name } = this.state
 		return (
 			<section>
-				<h1 className='h4'>{login ? 'login' : 'sign Up'}</h1>
+				<h1 className='h4'>{login ? 'login' : 'sign up'}</h1>
 				{!login && (
 					<div className='form-group'>
 						<label htmlFor='name' className='form-label'>name</label>
