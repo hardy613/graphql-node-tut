@@ -12,9 +12,12 @@ const NEW_POSTS_SUBSCRIPTION = gql`
 				createdAt
 				url
 				title
-				image
 				description
 				slug
+				image {
+					id
+					path
+				}
 				postedBy {
 					id
 					name

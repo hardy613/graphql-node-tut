@@ -27,7 +27,6 @@ export const POST_FRAGMENT = gql`
 		image {
 			id
 			path
-			filename
 		}
 	}
 `

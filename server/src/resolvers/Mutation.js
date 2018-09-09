@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 const { getUserId, isUrl, hash, getExtension } = require('../utils')
 const { APP_SECRET, UPLOAD_DIR, ALLOWED_IMAGE_TYPES } = require('../constants')
 const { createWriteStream } = require('fs')
-var mkdirp = require('mkdirp');
+const mkdirp = require('mkdirp')
+const moment = require('moment')
 
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
@@ -45,7 +46,9 @@ async function post(parent, args, context, info) {
 		description = '',
 		title = '',
 		views = 1,
+		image = null
 	} = args
+	console.log(args)
 	url = url.trim()
 	description = description.trim()
 	title = title.trim()
@@ -55,7 +58,7 @@ async function post(parent, args, context, info) {
 	if(!/https?:\/\//.test(url)) {
 		url = `http://${url}`
 	}
-	const slug = hash(`${userId} + url}`)
+	const slug = hash(`${moment().unix() + url}`)
 	return context.db.mutation.createPost(
 		{
 			data: {
@@ -64,6 +67,7 @@ async function post(parent, args, context, info) {
 				description,
 				slug,
 				views,
+				image: { connect: { id: image } },
 				postedBy: { connect: { id: userId } },
 			},
 		},
@@ -110,21 +114,32 @@ async function viewPost(parent, {id, views}, context) {
 
 async function singleFile(_, { file }, context) {
 	const userId = getUserId(context)
-	console.log(await file)
 	const { stream, filename, mimetype, encoding } = await file;
 	const extension = getExtension(filename)
 	if(!ALLOWED_IMAGE_TYPES.includes(extension)) {
 		throw new Error(`Image type not allowed ${extension}`)
 	}
-	await storeUpload({ stream, filename, userId })
-	return { stream, filename, mimetype, encoding }
+	const storageName = `${moment().unix()}_${filename}`
+	const path = `${userId}/${storageName}`
+	await storeUpload({ stream, storageName, userId })
+	return context.db.mutation.createFile({
+			data: {
+				path,
+				filename: storageName,
+				mimetype,
+				encoding,
+				postedBy: { connect: { id: userId } },
+			},
+		},
+		` { id } `,
+	)
 }
 
-async function storeUpload ({ stream, filename, userId }) {
-	const path = mkdirp(`${UPLOAD_DIR}/${userId}`)
+async function storeUpload ({ stream, storageName, userId }) {
+	mkdirp(`${UPLOAD_DIR}/${userId}`)
 	return new Promise((resolve, reject) =>
 		stream
-			.pipe(createWriteStream(`${path}/${filename}`))
+			.pipe(createWriteStream(`${UPLOAD_DIR}/${userId}/${storageName}`))
 			.on('error', reject)
 			.on('finish', resolve)
 	)

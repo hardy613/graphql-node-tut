@@ -3,8 +3,13 @@ import { POST_FRAGMENT } from './fragments/post'
 
 const POST_MUTATION = gql`
 	${POST_FRAGMENT}
-	mutation PostMutation($description: String!, $url: String!, $title: String!) {
-		post(description: $description, url: $url, title: $title) {
+	mutation PostMutation(
+		$description: String!,
+		$url: String!,
+		$title: String!
+		$image: ID!
+	) {
+		post(description: $description, url: $url, title: $title, image: $image) {
 			... postFragment
 		}
 	}

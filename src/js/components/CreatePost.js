@@ -10,7 +10,7 @@ class CreatePost extends Component {
 		title: '',
 		description: '',
 		url: '',
-		file: null,
+		image: null,
 	}
 	
 	static propTypes = {
@@ -18,7 +18,7 @@ class CreatePost extends Component {
 	}
 	
 	render() {
-		const { description, url, title, file = null } = this.state
+		const { description, url, title, image = null } = this.state
 		return (
 			<section>
 				<h1 className='h4'>create a post</h1>
@@ -57,7 +57,7 @@ class CreatePost extends Component {
 					<label htmlFor='image' className='form-label'>image</label>
 					<Mutation
 						mutation={UPLOAD_FILE_MUTATION}
-						variables={{ file }}
+						onCompleted={({singleFile: { id }} ) => this.setState({ image: id })}
 					>
 						{uploadMutation => (
 							<input
@@ -66,11 +66,9 @@ class CreatePost extends Component {
 								className='form-input'
 								type='file'
 								accept='image/png, image/jpeg'
-								onChange={(e) => {
-										const [file] = e.target.files
-										console.log(file)
-										this.setState( {file} )
-								}}
+								onChange={({target: {validity, files: [file]}}) =>
+									validity.valid && uploadMutation({variables: {file}})
+								}
 							/>
 						)}
 				</Mutation>
@@ -90,7 +88,7 @@ class CreatePost extends Component {
 				<div className='form-group'>
 					<Mutation
 						mutation={POST_MUTATION}
-						variables={{ title, description, url, file }}
+						variables={{ title, description, url, image }}
 						onCompleted={() => this.props.history.push('/new')}
 						update={(store, {data: { post }}) => {
 							const first = POSTS_PER_PAGE

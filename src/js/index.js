@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import App from './components/App'
+import cookies from 'doc-cookies'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import cookies from 'doc-cookies'
 import { setContext } from 'apollo-link-context'
 import { AUTH_TOKEN } from './constants'
 import { split } from 'apollo-link'
@@ -49,8 +49,8 @@ const link = split(
 	},
 	wsLink,
 	authLink.concat(
-		httpLink,
 		uploadLink,
+		httpLink,
 	)
 )
 
