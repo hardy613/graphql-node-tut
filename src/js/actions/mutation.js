@@ -45,9 +45,18 @@ const VOTE_MUTATION = gql`
 	}
 `
 
+const UPLOAD_FILE_MUTATION = gql`
+  mutation uploadMutation($file: Upload!) {
+    singleFile(file: $file) {
+			id
+		}
+  }
+`
+
 export {
 	POST_MUTATION,
 	SIGNUP_MUTATION,
 	LOGIN_MUTATION,
 	VOTE_MUTATION,
+	UPLOAD_FILE_MUTATION,
 }

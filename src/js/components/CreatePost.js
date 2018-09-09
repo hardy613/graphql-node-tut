@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import { POST_MUTATION } from '../actions/mutation'
+import { POST_MUTATION, UPLOAD_FILE_MUTATION } from '../actions/mutation'
 import { FEED_QUERY } from '../actions/query'
 import { POSTS_PER_PAGE } from '../constants'
 import ReactRouterPropTypes from 'react-router-prop-types'
@@ -10,6 +10,7 @@ class CreatePost extends Component {
 		title: '',
 		description: '',
 		url: '',
+		file: null,
 	}
 	
 	static propTypes = {
@@ -17,10 +18,17 @@ class CreatePost extends Component {
 	}
 	
 	render() {
-		const { description, url, title, image = '' } = this.state
+		const { description, url, title, file = null } = this.state
 		return (
 			<section>
 				<h1 className='h4'>create a post</h1>
+				<form 
+					id='create-post'
+					action='#'
+					method='post'
+					encType='multipart/form-data'
+					onSubmit={(e => e.preventDefault())}
+				>
 				<div className='form-group'>
 					<label htmlFor='url' className='form-label'>link</label>
 					<input
@@ -34,7 +42,7 @@ class CreatePost extends Component {
 					/>
 				</div>
 				<div className='form-group'>
-					<label htmlFor='title'  className='form-label'>title</label>
+					<label htmlFor='title' className='form-label'>title</label>
 					<input
 						id='title'
 						name='title'
@@ -44,6 +52,28 @@ class CreatePost extends Component {
 						type='text'
 						placeholder='Give your link a title'
 					/>
+				</div>
+				<div className='form-group'>
+					<label htmlFor='image' className='form-label'>image</label>
+					<Mutation
+						mutation={UPLOAD_FILE_MUTATION}
+						variables={{ file }}
+					>
+						{uploadMutation => (
+							<input
+								id='image'
+								name='image'
+								className='form-input'
+								type='file'
+								accept='image/png, image/jpeg'
+								onChange={(e) => {
+										const [file] = e.target.files
+										console.log(file)
+										this.setState( {file} )
+								}}
+							/>
+						)}
+				</Mutation>
 				</div>
 				<div className='form-group'>
 					<label htmlFor='description' className='form-label'>description</label>
@@ -60,7 +90,7 @@ class CreatePost extends Component {
 				<div className='form-group'>
 					<Mutation
 						mutation={POST_MUTATION}
-						variables={{ title, description, url, image }}
+						variables={{ title, description, url, file }}
 						onCompleted={() => this.props.history.push('/new')}
 						update={(store, {data: { post }}) => {
 							const first = POSTS_PER_PAGE
@@ -83,6 +113,7 @@ class CreatePost extends Component {
 						{postMutation => <button className='btn btn-primary' onClick={postMutation}>submit</button>}
 					</Mutation>
 				</div>
+				</form>
 			</section>
 		)
 	}

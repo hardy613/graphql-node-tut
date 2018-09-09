@@ -12,8 +12,13 @@ import { AUTH_TOKEN } from './constants'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
+import { createUploadLink } from 'apollo-upload-client'
 
 const httpLink = createHttpLink({
+	uri: process.env.HTTP_URI,
+})
+
+const uploadLink = createUploadLink({
 	uri: process.env.HTTP_URI,
 })
 
@@ -43,8 +48,12 @@ const link = split(
 		return kind === 'OperationDefinition' && operation === 'subscription'
 	},
 	wsLink,
-	authLink.concat(httpLink)
+	authLink.concat(
+		httpLink,
+		uploadLink,
+	)
 )
+
 
 const client = new ApolloClient({
 	link,
