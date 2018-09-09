@@ -59,18 +59,19 @@ async function post(parent, args, context, info) {
 		url = `http://${url}`
 	}
 	const slug = hash(`${moment().unix() + url}`)
+	const data = {
+		url,
+		title,
+		description,
+		slug,
+		views,
+		postedBy: { connect: { id: userId } },
+	}
+	if(image) {
+		data.image = { connect: {id: image} }
+	}
 	return context.db.mutation.createPost(
-		{
-			data: {
-				url,
-				title,
-				description,
-				slug,
-				views,
-				image: { connect: { id: image } },
-				postedBy: { connect: { id: userId } },
-			},
-		},
+		{ data },
 		info,
 	)
 }
@@ -131,7 +132,7 @@ async function singleFile(_, { file }, context) {
 				postedBy: { connect: { id: userId } },
 			},
 		},
-		` { id } `,
+		` { id path } `,
 	)
 }
 

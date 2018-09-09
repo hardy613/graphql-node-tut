@@ -6,8 +6,8 @@ const POST_MUTATION = gql`
 	mutation PostMutation(
 		$description: String!,
 		$url: String!,
-		$title: String!
-		$image: ID!
+		$title: String!,
+		$image: ID
 	) {
 		post(description: $description, url: $url, title: $title, image: $image) {
 			... postFragment
@@ -54,6 +54,7 @@ const UPLOAD_FILE_MUTATION = gql`
   mutation uploadMutation($file: Upload!) {
     singleFile(file: $file) {
 			id
+			path
 		}
   }
 `

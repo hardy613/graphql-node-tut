@@ -18,7 +18,7 @@ class CreatePost extends Component {
 	}
 	
 	render() {
-		const { description, url, title, image = null } = this.state
+		const { description, url, title, image } = this.state
 		return (
 			<section>
 				<h1 className='h4'>create a post</h1>
