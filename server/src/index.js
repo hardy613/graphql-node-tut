@@ -34,6 +34,6 @@ const server = new GraphQLServer({
 server.express.use('/uploads', express.static(join(__dirname, '../uploads')))
 // eslint-disable-next-line no-console
 server.start({
-	getEndpoint: true
+	getEndpoint: true,
 }, () => console.log(`Server is running on ${process.env.ENDPOINT}`))
 

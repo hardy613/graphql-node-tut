@@ -48,7 +48,6 @@ async function post(parent, args, context, info) {
 		views = 1,
 		image = null
 	} = args
-	console.log(args)
 	url = url.trim()
 	description = description.trim()
 	title = title.trim()
@@ -115,12 +114,17 @@ async function viewPost(parent, {id, views}, context) {
 
 async function singleFile(_, { file }, context) {
 	const userId = getUserId(context)
-	const { stream, filename, mimetype, encoding } = await file;
+	const { stream, filename, mimetype, encoding } = file;
 	const extension = getExtension(filename)
 	if(!ALLOWED_IMAGE_TYPES.includes(extension)) {
 		throw new Error(`Image type not allowed ${extension}`)
 	}
-	const storageName = `${moment().unix()}_${filename}`
+
+	const hashedName = hash(
+		moment().unix() +
+		filename.substring(0, filename.lastIndexOf('/'))
+	)
+	const storageName = `${hashedName}.${extension}`
 	const path = `${userId}/${storageName}`
 	await storeUpload({ stream, storageName, userId })
 	return context.db.mutation.createFile({
