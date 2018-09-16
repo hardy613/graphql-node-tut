@@ -16,6 +16,11 @@ class CreatePost extends Component {
 	static propTypes = {
 		history: ReactRouterPropTypes.history.isRequired
 	}
+
+	clearImage = () => {
+		document.getElementById('image').value = null
+		this.setState({ image: null })
+	}
 	
 	render() {
 		const { description, url, title, image } = this.state
@@ -73,6 +78,14 @@ class CreatePost extends Component {
 						)}
 				</Mutation>
 				</div>
+				{image && (
+					<div className='form-group'>
+						<button
+							className='btn btn-primary'
+							onClick={this.clearImage}>
+						clear image</button>
+					</div>
+				)}
 				<div className='form-group'>
 					<label htmlFor='description' className='form-label'>description</label>
 					<textarea

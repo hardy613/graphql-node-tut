@@ -142,11 +142,12 @@ async function singleFile(_, { file }, context) {
 
 async function storeUpload ({ stream, storageName, userId }) {
 	mkdirp(`${UPLOAD_DIR}/${userId}`)
+	console.log('\n\n\n\n\nasdfas\n\n\n\n\n')
 	return new Promise((resolve, reject) =>
 		stream
 			.on('error', reject)
-			.on('finish', resolve)
 			.pipe(createWriteStream(`${UPLOAD_DIR}/${userId}/${storageName}`))
+			.on('finish', resolve)
 	)
 }
 

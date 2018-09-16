@@ -45,18 +45,31 @@ class PostItem extends Component {
 				<header>
 				{!image || !image.path ? '' :
 					(<div className='card-image'>
-						<img src={`${UPLOAD_DIR}/${image.path}`} className='img-responsive' />
+						<a 
+							target='_blank'
+							href={`${UPLOAD_DIR}/${image.path}`}
+							title='view in a new tab'
+						>
+							<img src={`${UPLOAD_DIR}/${image.path}`} className='img-responsive' />
+						</a>
 					</div>)}
 				<div className='card-header'>
 					<h2 className='card-title h5'>
-						<Link to={'/-?' + slug} target='_blank'>{title}</Link>
+						<Link 
+							to={'/-?' + slug}
+							target='_blank'
+							title={title}>
+								{title}
+						</Link>
 						{' '}<span className='domain text-break'>{hostname}</span>
 					</h2>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}
 						{postedBy ? postedBy.name
 							: 'Unknown'}{' - '}
-						{moment(createdAt).fromNow()}
+						<span title={moment(createdAt).format()}>
+							{moment(createdAt).fromNow()}
+						</span>
 					</p>
 				</div>
 				</header>
