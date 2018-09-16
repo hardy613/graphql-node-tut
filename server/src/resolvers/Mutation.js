@@ -114,7 +114,7 @@ async function viewPost(parent, {id, views}, context) {
 
 async function singleFile(_, { file }, context) {
 	const userId = getUserId(context)
-	const { stream, filename, mimetype, encoding } = file;
+	const { stream, filename, mimetype, encoding } = await file
 	const extension = getExtension(filename)
 	if(!ALLOWED_IMAGE_TYPES.includes(extension)) {
 		throw new Error(`Image type not allowed ${extension}`)
@@ -136,7 +136,7 @@ async function singleFile(_, { file }, context) {
 				postedBy: { connect: { id: userId } },
 			},
 		},
-		` { id path } `,
+		' { id path } ',
 	)
 }
 
@@ -144,9 +144,9 @@ async function storeUpload ({ stream, storageName, userId }) {
 	mkdirp(`${UPLOAD_DIR}/${userId}`)
 	return new Promise((resolve, reject) =>
 		stream
-			.pipe(createWriteStream(`${UPLOAD_DIR}/${userId}/${storageName}`))
 			.on('error', reject)
 			.on('finish', resolve)
+			.pipe(createWriteStream(`${UPLOAD_DIR}/${userId}/${storageName}`))
 	)
 }
 

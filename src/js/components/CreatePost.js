@@ -66,7 +66,7 @@ class CreatePost extends Component {
 								className='form-input'
 								type='file'
 								accept='image/png, image/jpeg'
-								onChange={({target: {validity, files: [file]}}) =>
+								onChange={({target: {validity, files: [file]}}) => 
 									validity.valid && uploadMutation({variables: {file}})
 								}
 							/>
