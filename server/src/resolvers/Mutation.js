@@ -1,8 +1,10 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { getUserId, isUrl, hash } = require('../utils')
-const { APP_SECRET } = require('../constants')
-const moment= require('moment')
+const { getUserId, isUrl, hash, getExtension } = require('../utils')
+const { APP_SECRET, UPLOAD_DIR, ALLOWED_IMAGE_TYPES } = require('../constants')
+const { createWriteStream } = require('fs')
+const mkdirp = require('mkdirp')
+const moment = require('moment')
 
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
@@ -38,11 +40,13 @@ async function login(parent, {email, password}, context) {
 }
 
 async function post(parent, args, context, info) {
+	const userId = getUserId(context)
 	let {
 		url = '',
 		description = '',
 		title = '',
 		views = 1,
+		image = null
 	} = args
 	url = url.trim()
 	description = description.trim()
@@ -53,19 +57,20 @@ async function post(parent, args, context, info) {
 	if(!/https?:\/\//.test(url)) {
 		url = `http://${url}`
 	}
-	const userId = getUserId(context)
-	const slug = hash(`${moment().millisecond() + url}`)
+	const slug = hash(`${moment().unix() + url}`)
+	const data = {
+		url,
+		title,
+		description,
+		slug,
+		views,
+		postedBy: { connect: { id: userId } },
+	}
+	if(image) {
+		data.image = { connect: {id: image} }
+	}
 	return context.db.mutation.createPost(
-		{
-			data: {
-				url,
-				title,
-				description,
-				slug,
-				views,
-				postedBy: { connect: { id: userId } },
-			},
-		},
+		{ data },
 		info,
 	)
 }
@@ -107,10 +112,50 @@ async function viewPost(parent, {id, views}, context) {
 	})
 }
 
+async function singleFile(_, { file }, context) {
+	const userId = getUserId(context)
+	const { stream, filename, mimetype, encoding } = await file
+	const extension = getExtension(filename)
+	if(!ALLOWED_IMAGE_TYPES.includes(extension)) {
+		throw new Error(`Image type not allowed ${extension}`)
+	}
+
+	const hashedName = hash(
+		moment().unix() +
+		filename.substring(0, filename.lastIndexOf('/'))
+	)
+	const storageName = `${hashedName}.${extension}`
+	const path = `${userId}/${storageName}`
+	await storeUpload({ stream, storageName, userId })
+	return context.db.mutation.createFile({
+			data: {
+				path,
+				filename: storageName,
+				mimetype,
+				encoding,
+				postedBy: { connect: { id: userId } },
+			},
+		},
+		' { id path } ',
+	)
+}
+
+async function storeUpload ({ stream, storageName, userId }) {
+	mkdirp(`${UPLOAD_DIR}/${userId}`)
+	console.log('\n\n\n\n\nasdfas\n\n\n\n\n')
+	return new Promise((resolve, reject) =>
+		stream
+			.on('error', reject)
+			.pipe(createWriteStream(`${UPLOAD_DIR}/${userId}/${storageName}`))
+			.on('finish', resolve)
+	)
+}
+
 module.exports = {
 	signup,
 	login,
 	post,
 	vote,
 	viewPost,
+	singleFile,
 }

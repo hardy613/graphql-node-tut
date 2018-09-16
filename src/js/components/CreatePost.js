@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
-import { POST_MUTATION } from '../actions/mutation'
+import { POST_MUTATION, UPLOAD_FILE_MUTATION } from '../actions/mutation'
 import { FEED_QUERY } from '../actions/query'
 import { POSTS_PER_PAGE } from '../constants'
 import ReactRouterPropTypes from 'react-router-prop-types'
@@ -10,17 +10,30 @@ class CreatePost extends Component {
 		title: '',
 		description: '',
 		url: '',
+		image: null,
 	}
 	
 	static propTypes = {
 		history: ReactRouterPropTypes.history.isRequired
 	}
+
+	clearImage = () => {
+		document.getElementById('image').value = null
+		this.setState({ image: null })
+	}
 	
 	render() {
-		const { description, url, title, image = '' } = this.state
+		const { description, url, title, image } = this.state
 		return (
 			<section>
 				<h1 className='h4'>create a post</h1>
+				<form 
+					id='create-post'
+					action='#'
+					method='post'
+					encType='multipart/form-data'
+					onSubmit={(e => e.preventDefault())}
+				>
 				<div className='form-group'>
 					<label htmlFor='url' className='form-label'>link</label>
 					<input
@@ -34,7 +47,7 @@ class CreatePost extends Component {
 					/>
 				</div>
 				<div className='form-group'>
-					<label htmlFor='title'  className='form-label'>title</label>
+					<label htmlFor='title' className='form-label'>title</label>
 					<input
 						id='title'
 						name='title'
@@ -45,6 +58,34 @@ class CreatePost extends Component {
 						placeholder='Give your link a title'
 					/>
 				</div>
+				<div className='form-group'>
+					<label htmlFor='image' className='form-label'>image</label>
+					<Mutation
+						mutation={UPLOAD_FILE_MUTATION}
+						onCompleted={({singleFile: { id }} ) => this.setState({ image: id })}
+					>
+						{uploadMutation => (
+							<input
+								id='image'
+								name='image'
+								className='form-input'
+								type='file'
+								accept='image/png, image/jpeg'
+								onChange={({target: {validity, files: [file]}}) => 
+									validity.valid && uploadMutation({variables: {file}})
+								}
+							/>
+						)}
+				</Mutation>
+				</div>
+				{image && (
+					<div className='form-group'>
+						<button
+							className='btn btn-primary'
+							onClick={this.clearImage}>
+						clear image</button>
+					</div>
+				)}
 				<div className='form-group'>
 					<label htmlFor='description' className='form-label'>description</label>
 					<textarea
@@ -83,6 +124,7 @@ class CreatePost extends Component {
 						{postMutation => <button className='btn btn-primary' onClick={postMutation}>submit</button>}
 					</Mutation>
 				</div>
+				</form>
 			</section>
 		)
 	}

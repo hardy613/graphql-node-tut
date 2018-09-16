@@ -3,8 +3,13 @@ import { POST_FRAGMENT } from './fragments/post'
 
 const POST_MUTATION = gql`
 	${POST_FRAGMENT}
-	mutation PostMutation($description: String!, $url: String!, $title: String!) {
-		post(description: $description, url: $url, title: $title) {
+	mutation PostMutation(
+		$description: String!,
+		$url: String!,
+		$title: String!,
+		$image: ID
+	) {
+		post(description: $description, url: $url, title: $title, image: $image) {
 			... postFragment
 		}
 	}
@@ -45,9 +50,19 @@ const VOTE_MUTATION = gql`
 	}
 `
 
+const UPLOAD_FILE_MUTATION = gql`
+  mutation uploadMutation($file: Upload!) {
+    singleFile(file: $file) {
+			id
+			path
+		}
+  }
+`
+
 export {
 	POST_MUTATION,
 	SIGNUP_MUTATION,
 	LOGIN_MUTATION,
 	VOTE_MUTATION,
+	UPLOAD_FILE_MUTATION,
 }

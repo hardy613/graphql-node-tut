@@ -1,9 +1,11 @@
 # import Post, PostSubscriptionPayload, Vote, VoteSubscriptionPayload, PostOrderByInput from "./generated/prisma.graphql"
+scalar Upload
 
 type Query {
   post(id: ID!): Post!
   feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
   getPostBySlug(slug: String!): Post!
+  getFile(id: ID!): File!
 }
 
 type Feed {
@@ -12,13 +14,14 @@ type Feed {
 }
 
 type Mutation {
-  post(url: String!, description: String! title: String!): Post!
+  post(url: String!, description: String!, title: String!, image: ID): Post!
   updatePost(id: ID!, url: String, description: String): Post
   deletePost(id: ID!): Post
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   vote(postId: ID!): Vote
   viewPost(id: ID!, views: Int!): Post!
+  singleFile(file: Upload!): File!
 }
 
 type AuthPayload {
@@ -31,6 +34,12 @@ type User {
   name: String!
   email: String!
   posts: [Post!]!
+}
+
+type File {
+  id: ID!
+  path: String!
+  filename: String!
 }
 
 type Subscription {

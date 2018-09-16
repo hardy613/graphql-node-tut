@@ -5,7 +5,8 @@ const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
 const Subscription = require('./resolvers/Subscription')
 const Feed = require('./resolvers/Feed')
-const { resolve } = require('path')
+const { resolve, join } = require('path')
+const express = require('express')
 
 const resolvers = {
 	Query,
@@ -30,5 +31,12 @@ const server = new GraphQLServer({
 	}),
 })
 
+server.express.use('/uploads', express.static(join(__dirname, '../uploads')))
+server.start({
+	uploads: {
+		maxFileSize: 2 * 1024 * 1024,
+		maxFiles: 5,
+	},
 // eslint-disable-next-line no-console
-server.start(() => console.log(`Server is running on ${process.env.ENDPOINT}`))
+}, () => console.log(`Server is running on ${process.env.ENDPOINT}`))
+

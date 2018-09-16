@@ -21,9 +21,12 @@ export const POST_FRAGMENT = gql`
 		createdAt
 		url
 		title
-		image
 		description
 		slug
 		views
+		image {
+			id
+			path
+		}
 	}
 `

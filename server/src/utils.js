@@ -32,8 +32,13 @@ function hash(string = '', max) {
 	return hash.substring(0, max)
 }
 
+function getExtension(filename) {
+	return filename.split('.').pop()
+}
+
 module.exports = {
 	getUserId,
 	isUrl,
 	hash,
+	getExtension,
 }

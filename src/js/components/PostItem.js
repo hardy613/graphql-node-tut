@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import { AUTH_TOKEN } from '../constants'
+import { 
+	AUTH_TOKEN,
+	UPLOAD_DIR,
+} from '../constants'
 import cookies from 'doc-cookies'
 import { Mutation } from 'react-apollo'
 import { VOTE_MUTATION } from '../actions/mutation'
@@ -26,7 +29,7 @@ class PostItem extends Component {
 		const {
 			title,
 			description,
-			image = null,
+			image,
 			url,
 			slug,
 			votes,
@@ -34,25 +37,39 @@ class PostItem extends Component {
 			createdAt,
 			postedBy
 		} = this.props.post
+
 		const { isSearch } = this.props
 		const hostname = this._getHostname(url)	
 		return (
 			<article className='card'>
 				<header>
-				{!image ? '' :
+				{!image || !image.path ? '' :
 					(<div className='card-image'>
-						<img src={image} className='img-responsive' />
+						<a 
+							target='_blank'
+							href={`${UPLOAD_DIR}/${image.path}`}
+							title='view in a new tab'
+						>
+							<img src={`${UPLOAD_DIR}/${image.path}`} className='img-responsive' />
+						</a>
 					</div>)}
 				<div className='card-header'>
 					<h2 className='card-title h5'>
-						<Link to={'/-?' + slug} target='_blank'>{title}</Link>
+						<Link 
+							to={'/-?' + slug}
+							target='_blank'
+							title={title}>
+								{title}
+						</Link>
 						{' '}<span className='domain text-break'>{hostname}</span>
 					</h2>
 					<p className='card-subtitle text-gray'>
 						posted by{' '}
 						{postedBy ? postedBy.name
 							: 'Unknown'}{' - '}
-						{moment(createdAt).fromNow()}
+						<span title={moment(createdAt).format()}>
+							{moment(createdAt).fromNow()}
+						</span>
 					</p>
 				</div>
 				</header>
