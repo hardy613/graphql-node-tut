@@ -34,7 +34,7 @@ const server = new GraphQLServer({
 server.express.use('/uploads', express.static(join(__dirname, '../uploads')))
 server.start({
 	uploads: {
-		maxFileSize: 1 * 1024 * 1024,
+		maxFileSize: 2 * 1024 * 1024,
 		maxFiles: 5,
 	},
 // eslint-disable-next-line no-console
