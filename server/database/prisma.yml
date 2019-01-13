@@ -1,4 +1,5 @@
-endpoint: ${env:ENDPOINT}
+#endpoint: ${env:ENDPOINT}
+endpoint: http://localhost:4466
 datamodel: datamodel.graphql
 secret: ${env:DB_SECRET}
 hooks:
