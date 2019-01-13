@@ -22,8 +22,6 @@ services:
             user: ${POSTGRES_USER}
             password: ${POSTGRES_PASSWORD}
   db:
-    env_file:
-      - .env
     image: sly613/dev-psql
     ports:
       - 5432:5432

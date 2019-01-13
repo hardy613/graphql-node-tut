@@ -1,10 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { getUserId, isUrl, hash, getExtension } = require('../utils')
+const { getUserId, isUrl, getExtension } = require('../utils')
 const { APP_SECRET, UPLOAD_DIR, ALLOWED_IMAGE_TYPES } = require('../constants')
 const { createWriteStream } = require('fs')
 const mkdirp = require('mkdirp')
 const moment = require('moment')
+const murmurhash = require('murmurhash')
 
 async function signup(parent, args, context) {
 	const password = await bcrypt.hash(args.password, 10)
@@ -54,10 +55,8 @@ async function post(parent, args, context, info) {
 	if(!isUrl(url)) {
 		throw new Error('Invaild url')
 	}
-	if(!/https?:\/\//.test(url)) {
-		url = `http://${url}`
-	}
-	const slug = hash(`${moment().unix() + url}`)
+
+	const slug = murmurhash(url)
 	const data = {
 		url,
 		title,
@@ -120,8 +119,7 @@ async function singleFile(_, { file }, context) {
 		throw new Error(`Image type not allowed ${extension}`)
 	}
 
-	const hashedName = hash(
-		moment().unix() +
+	const hashedName = murmurhash(
 		filename.substring(0, filename.lastIndexOf('/'))
 	)
 	const storageName = `${hashedName}.${extension}`
@@ -142,7 +140,6 @@ async function singleFile(_, { file }, context) {
 
 async function storeUpload ({ stream, storageName, userId }) {
 	mkdirp(`${UPLOAD_DIR}/${userId}`)
-	console.log('\n\n\n\n\nasdfas\n\n\n\n\n')
 	return new Promise((resolve, reject) =>
 		stream
 			.on('error', reject)
